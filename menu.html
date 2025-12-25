@@ -6,6 +6,8 @@
     <title>Magic Corner Cafe - Menu Page</title>
     <!-- Linking Stylesheets-->
      <link rel="stylesheet" href="assets/css/header.css">
+     <link rel="stylesheet" href="assets/css/menu.css">
+     <link rel="stylesheet" href="assets/css/mediaQueries.css">
     <!-- Linking Fonts -->
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link href="https://fonts.googleapis.com/css?family=Jost:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic" rel="stylesheet" />
@@ -15,6 +17,7 @@
 <body>
     <header class="header">
         <h1>Magic Corner Café</h1>
+        <p>Artisan Coffee • Fresh Pastries • Warm Hospitality</p>
         <nav>
             <div class="nav-container">
                 <ul class="nav-menu_menu">
@@ -28,7 +31,712 @@
         </nav>
     </header>
 
+    <main>  
+        <!-- Navigation Tabs -->
+        <nav class="menu-nav">
+            <div class="menu-nav-container">
+                <button class="menu-tab active" onclick="showSection('coffee')">☕ Coffee & Espresso</button>
+                <button class="menu-tab" onclick="showSection('tea')">🍵 Tea & Beverages</button>
+                <button class="menu-tab" onclick="showSection('pastries')">🥐 Fresh Pastries</button>
+                <button class="menu-tab" onclick="showSection('breakfast')">🍳 Breakfast</button>
+                <button class="menu-tab" onclick="showSection('lunch')">🥪 Lunch & Light Bites</button>
+                <button class="menu-tab" onclick="showSection('desserts')">🍰 Desserts</button>
+            </div>
+        </nav>
+    
+        <!-- Menu Container -->
+        <div class="menu-container">
+            <!-- Coffee Section -->
+            <section id="coffee" class="menu-section active">
+                <div class="section-header">
+                    <h2>Coffee & Espresso</h2>
+                    <p>Hand-crafted beverages made with locally roasted, fair-trade beans</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-category">
+                        <h3 class="category-title">Espresso Classics</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Espresso</div>
+                                <div class="item-description">Rich, bold single or double shot</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hot</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Americano</div>
+                                <div class="item-description">Espresso with hot water, smooth and strong</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hot</span>
+                                    <span class="tag">Iced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Cappuccino</div>
+                                <div class="item-description">Espresso with steamed milk and foam</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hot</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Café Latte</div>
+                                <div class="item-description">Espresso with steamed milk, light foam</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hot</span>
+                                    <span class="tag">Iced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.00</div>
+                        </div>
+                    </div>
+    
+                    <div class="menu-category">
+                        <h3 class="category-title">Specialty Drinks</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Mocha</div>
+                                <div class="item-description">Espresso with chocolate and steamed milk</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hot</span>
+                                    <span class="tag">Iced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Caramel Macchiato</div>
+                                <div class="item-description">Vanilla syrup, steamed milk, espresso, caramel drizzle</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hot</span>
+                                    <span class="tag">Iced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.75</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">White Chocolate Mocha</div>
+                                <div class="item-description">Rich white chocolate with espresso and steamed milk</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hot</span>
+                                    <span class="tag">Iced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">6.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Seasonal Special</div>
+                                <div class="item-description">Ask about our current seasonal creation</div>
+                                <div class="item-tags">
+                                    <span class="tag">Limited</span>
+                                </div>
+                            </div>
+                            <div class="item-price">6.25</div>
+                        </div>
+                    </div>
+    
+                    <div class="menu-category">
+                        <h3 class="category-title">Cold Brew & Iced</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Cold Brew</div>
+                                <div class="item-description">Smooth, rich coffee steeped for 12 hours</div>
+                                <div class="item-tags">
+                                    <span class="tag">Iced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Nitro Cold Brew</div>
+                                <div class="item-description">Creamy, cascading cold brew with nitrogen</div>
+                                <div class="item-tags">
+                                    <span class="tag">Iced</span>
+                                    <span class="tag">Premium</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Iced Latte</div>
+                                <div class="item-description">Espresso over ice with milk</div>
+                                <div class="item-tags">
+                                    <span class="tag">Iced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Frappé</div>
+                                <div class="item-description">Blended iced coffee drink, whipped cream</div>
+                                <div class="item-tags">
+                                    <span class="tag">Iced</span>
+                                    <span class="tag">Blended</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.75</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Tea Section -->
+            <section id="tea" class="menu-section">
+                <div class="section-header">
+                    <h2>Tea & Other Beverages</h2>
+                    <p>Organic teas, fresh juices, and house-made specialties</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-category">
+                        <h3 class="category-title">Hot Teas</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Earl Grey</div>
+                                <div class="item-description">Classic black tea with bergamot oil</div>
+                                <div class="item-tags">
+                                    <span class="tag">Black Tea</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Green Tea</div>
+                                <div class="item-description">Premium Japanese sencha</div>
+                                <div class="item-tags">
+                                    <span class="tag">Green Tea</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Chamomile</div>
+                                <div class="item-description">Soothing herbal tea, caffeine-free</div>
+                                <div class="item-tags">
+                                    <span class="tag">Herbal</span>
+                                    <span class="tag">Caffeine-Free</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.25</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Chai Latte</div>
+                                <div class="item-description">Spiced tea with steamed milk</div>
+                                <div class="item-tags">
+                                    <span class="tag">Spiced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.50</div>
+                        </div>
+                    </div>
+    
+                    <div class="menu-category">
+                        <h3 class="category-title">Iced Teas & Refreshments</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Iced Black Tea</div>
+                                <div class="item-description">Freshly brewed, served over ice</div>
+                                <div class="item-tags">
+                                    <span class="tag">Iced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Lemonade</div>
+                                <div class="item-description">House-made fresh daily</div>
+                                <div class="item-tags">
+                                    <span class="tag">Fresh</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.75</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Sparkling Water</div>
+                                <div class="item-description">Premium sparkling water with lime</div>
+                                <div class="item-tags">
+                                    <span class="tag">Sparkling</span>
+                                </div>
+                            </div>
+                            <div class="item-price">2.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Fresh Orange Juice</div>
+                                <div class="item-description">Squeezed fresh every morning</div>
+                                <div class="item-tags">
+                                    <span class="tag">Fresh</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.00</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Pastries Section -->
+            <section id="pastries" class="menu-section">
+                <div class="section-header">
+                    <h2>Fresh Pastries & Baked Goods</h2>
+                    <p>Baked fresh daily using traditional techniques and premium ingredients</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-category">
+                        <h3 class="category-title">Viennoiseries</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Croissant</div>
+                                <div class="item-description">Buttery, flaky, made with French butter</div>
+                                <div class="item-tags">
+                                    <span class="tag">Buttery</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Pain au Chocolat</div>
+                                <div class="item-description">Croissant with dark chocolate batons</div>
+                                <div class="item-tags">
+                                    <span class="tag">Chocolate</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Almond Croissant</div>
+                                <div class="item-description">Filled with almond cream and topped with almonds</div>
+                                <div class="item-tags">
+                                    <span class="tag">Almond</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Morning Bun</div>
+                                <div class="item-description">Citrus-scented roll with cinnamon sugar</div>
+                                <div class="item-tags">
+                                    <span class="tag">Citrus</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.75</div>
+                        </div>
+                    </div>
+    
+                    <div class="menu-category">
+                        <h3 class="category-title">Muffins & Scones</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Blueberry Muffin</div>
+                                <div class="item-description">Loaded with fresh blueberries</div>
+                                <div class="item-tags">
+                                    <span class="tag">Fresh Fruit</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Chocolate Chip Muffin</div>
+                                <div class="item-description">Moist muffin with dark chocolate chips</div>
+                                <div class="item-tags">
+                                    <span class="tag">Chocolate</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Classic Scone</div>
+                                <div class="item-description">Traditional English scone with clotted cream</div>
+                                <div class="item-tags">
+                                    <span class="tag">Traditional</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.25</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Cinnamon Roll</div>
+                                <div class="item-description">Swirled with cinnamon, topped with icing</div>
+                                <div class="item-tags">
+                                    <span class="tag">Cinnamon</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.50</div>
+                        </div>
+                    </div>
+    
+                    <div class="menu-category">
+                        <h3 class="category-title">Cakes & Cookies</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Chocolate Chip Cookie</div>
+                                <div class="item-description">Classic cookie, soft and chewy</div>
+                                <div class="item-tags">
+                                    <span class="tag">Classic</span>
+                                </div>
+                            </div>
+                            <div class="item-price">2.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Oatmeal Raisin Cookie</div>
+                                <div class="item-description">Hearty oatmeal with plump raisins</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hearty</span>
+                                </div>
+                            </div>
+                            <div class="item-price">2.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Lemon Pound Cake</div>
+                                <div class="item-description">Moist cake with lemon glaze</div>
+                                <div class="item-tags">
+                                    <span class="tag">Citrus</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.75</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Carrot Cake Slice</div>
+                                <div class="item-description">Spiced carrot cake with cream cheese frosting</div>
+                                <div class="item-tags">
+                                    <span class="tag">Spiced</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.25</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Breakfast Section -->
+            <section id="breakfast" class="menu-section">
+                <div class="section-header">
+                    <h2>Breakfast Menu</h2>
+                    <p>Served daily until 11:30 AM</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-category">
+                        <h3 class="category-title">Classic Breakfast</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Avocado Toast</div>
+                                <div class="item-description">Sourdough toast with smashed avocado, cherry tomatoes, feta</div>
+                                <div class="item-tags">
+                                    <span class="tag">Vegetarian</span>
+                                </div>
+                            </div>
+                            <div class="item-price">8.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Breakfast Sandwich</div>
+                                <div class="item-description">Egg, cheese, choice of bacon or sausage on croissant</div>
+                                <div class="item-tags">
+                                    <span class="tag">Protein</span>
+                                </div>
+                            </div>
+                            <div class="item-price">7.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Greek Yogurt Parfait</div>
+                                <div class="item-description">Layers of yogurt, granola, fresh berries, honey</div>
+                                <div class="item-tags">
+                                    <span class="tag">Healthy</span>
+                                </div>
+                            </div>
+                            <div class="item-price">6.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Steel-Cut Oatmeal</div>
+                                <div class="item-description">With brown sugar, raisins, walnuts</div>
+                                <div class="item-tags">
+                                    <span class="tag">Hearty</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.50</div>
+                        </div>
+                    </div>
+    
+                    <div class="menu-category">
+                        <h3 class="category-title">From the Griddle</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Buttermilk Pancakes</div>
+                                <div class="item-description">Stack of three with maple syrup and butter</div>
+                                <div class="item-tags">
+                                    <span class="tag">Classic</span>
+                                </div>
+                            </div>
+                            <div class="item-price">7.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Belgian Waffle</div>
+                                <div class="item-description">Crispy waffle with powdered sugar</div>
+                                <div class="item-tags">
+                                    <span class="tag">Crispy</span>
+                                </div>
+                            </div>
+                            <div class="item-price">6.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">French Toast</div>
+                                <div class="item-description">Thick-cut brioche with cinnamon</div>
+                                <div class="item-tags">
+                                    <span class="tag">Brioche</span>
+                                </div>
+                            </div>
+                            <div class="item-price">7.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Add Berries</div>
+                                <div class="item-description">Fresh strawberries or blueberries</div>
+                                <div class="item-tags">
+                                    <span class="tag">Fresh</span>
+                                </div>
+                            </div>
+                            <div class="item-price">+2.00</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Lunch Section -->
+            <section id="lunch" class="menu-section">
+                <div class="section-header">
+                    <h2>Lunch & Light Bites</h2>
+                    <p>Served daily from 11:30 AM - 3:00 PM</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-category">
+                        <h3 class="category-title">Sandwiches & Wraps</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Turkey & Swiss</div>
+                                <div class="item-description">Roasted turkey, Swiss cheese, lettuce, tomato, mayo</div>
+                                <div class="item-tags">
+                                    <span class="tag">Classic</span>
+                                </div>
+                            </div>
+                            <div class="item-price">8.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Chicken Salad</div>
+                                <div class="item-description">House-made chicken salad, lettuce, croissant</div>
+                                <div class="item-tags">
+                                    <span class="tag">House-Made</span>
+                                </div>
+                            </div>
+                            <div class="item-price">8.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Veggie Wrap</div>
+                                <div class="item-description">Hummus, roasted vegetables, feta, spinach wrap</div>
+                                <div class="item-tags">
+                                    <span class="tag">Vegetarian</span>
+                                </div>
+                            </div>
+                            <div class="item-price">7.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Grilled Cheese</div>
+                                <div class="item-description">Aged cheddar on sourdough</div>
+                                <div class="item-tags">
+                                    <span class="tag">Comfort</span>
+                                </div>
+                            </div>
+                            <div class="item-price">6.50</div>
+                        </div>
+                    </div>
+    
+                    <div class="menu-category">
+                        <h3 class="category-title">Salads & Soups</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Garden Salad</div>
+                                <div class="item-description">Mixed greens, vegetables, choice of dressing</div>
+                                <div class="item-tags">
+                                    <span class="tag">Fresh</span>
+                                </div>
+                            </div>
+                            <div class="item-price">7.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Caesar Salad</div>
+                                <div class="item-description">Romaine, parmesan, croutons, Caesar dressing</div>
+                                <div class="item-tags">
+                                    <span class="tag">Classic</span>
+                                </div>
+                            </div>
+                            <div class="item-price">8.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Soup of the Day</div>
+                                <div class="item-description">Fresh-made daily, ask server for details</div>
+                                <div class="item-tags">
+                                    <span class="tag">Daily</span>
+                                </div>
+                            </div>
+                            <div class="item-price">6.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Soup & Salad Combo</div>
+                                <div class="item-description">Cup of soup with side salad</div>
+                                <div class="item-tags">
+                                    <span class="tag">Combo</span>
+                                </div>
+                            </div>
+                            <div class="item-price">9.50</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Desserts Section -->
+            <section id="desserts" class="menu-section">
+                <div class="section-header">
+                    <h2>Desserts</h2>
+                    <p>Sweet endings to your perfect meal</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-category">
+                        <h3 class="category-title">Cakes & Pies</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Chocolate Cake</div>
+                                <div class="item-description">Rich chocolate layer cake</div>
+                                <div class="item-tags">
+                                    <span class="tag">Rich</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Cheesecake</div>
+                                <div class="item-description">New York style with berry compote</div>
+                                <div class="item-tags">
+                                    <span class="tag">Classic</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.75</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Apple Pie</div>
+                                <div class="item-description">Warm apple pie with cinnamon</div>
+                                <div class="item-tags">
+                                    <span class="tag">Warm</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Tiramisu</div>
+                                <div class="item-description">Italian coffee-flavored dessert</div>
+                                <div class="item-tags">
+                                    <span class="tag">Italian</span>
+                                </div>
+                            </div>
+                            <div class="item-price">6.00</div>
+                        </div>
+                    </div>
+    
+                    <div class="menu-category">
+                        <h3 class="category-title">Frozen Treats</h3>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Ice Cream Scoop</div>
+                                <div class="item-description">Vanilla, chocolate, or strawberry</div>
+                                <div class="item-tags">
+                                    <span class="tag">Classic</span>
+                                </div>
+                            </div>
+                            <div class="item-price">3.50</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Affogato</div>
+                                <div class="item-description">Vanilla ice cream with espresso shot</div>
+                                <div class="item-tags">
+                                    <span class="tag">Coffee</span>
+                                </div>
+                            </div>
+                            <div class="item-price">5.00</div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <div class="item-name">Milkshake</div>
+                                <div class="item-description">Thick and creamy, various flavors</div>
+                                <div class="item-tags">
+                                    <span class="tag">Creamy</span>
+                                </div>
+                            </div>
+                            <div class="item-price">4.50</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Special Offers -->
+            <div class="special-offers">
+                <h3>🌟 Today's Special Offers</h3>
+                <div class="offer-grid">
+                    <div class="offer-item">
+                        <h4>Happy Hour</h4>
+                        <p>2-5 PM: 20% off all coffee drinks</p>
+                    </div>
+                    <div class="offer-item">
+                        <h4>Breakfast Combo</h4>
+                        <p>Coffee + Pastry for $7.50</p>
+                    </div>
+                    <div class="offer-item">
+                        <h4>Loyalty Program</h4>
+                        <p>Buy 9 drinks, get the 10th free!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <!-- SCRIPTS -->
     <script src="assets/js/header.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

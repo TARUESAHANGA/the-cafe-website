@@ -42,21 +42,197 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome to The Magic Corner Cafe`</h1>
-            <p class="hero-subtitle">Where every cup tells a story</p>
-            <p class="hero-description">Fresh roasted coffee, homemade pastries, and warm conversations await you.</p>
-            <div class="hero-buttons">
-                <a href="menu.html" class="btn btn-primary">View Menu</a>
-                <a href="contact.html" class="btn btn-secondary">Visit Us</a>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to The Magic Corner Cafe</h1>
+                <p class="hero-subtitle">Where every cup tells a story</p>
+                <p class="hero-description">Fresh roasted coffee, homemade pastries, and warm conversations await you.</p>
+        <!-- Hero buttons-->
+                <div class="hero-buttons">
+                    <a href="menu.html" class="btn btn-primary">View Menu</a>
+                    <a href="contact.html" class="btn btn-secondary">Visit Us</a>
+                </div>
+            </div>
+        <!-- Hero Image -->
+            <div class="hero-image">
+                <img src="assets/images/landingPage/coffee-hero-section.png" alt="Fresh coffee at Cozy Corner Cafe">
             </div>
         </div>
-        <div class="hero-image">
-            <img src="assets/images/landingPage/hot beverages.png" alt="Fresh coffee at Cozy Corner Cafe">
+       
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Us?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-coffee feature-icon"></i>
+                    <h3>Fresh Roasted Coffee</h3>
+                    <p>Locally roasted beans, ground fresh for every cup</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-utensils feature-icon"></i>
+                    <h3>Homemade Pastries</h3>
+                    <p>Baked daily in our kitchen using family recipes</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-heart feature-icon"></i>
+                    <h3>Community Focus</h3>
+                    <p>Supporting local farmers and suppliers</p>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- Menu Preview Section -->
+    <section class="menu-preview">
+        <div class="container">
+            <h2>Popular Items</h2>
+            <div class="menu-grid">
+                <!-- Product 1 -->
+                <div class="menu-item">
+                    <img src="assets/images/landingPage/espresso.png" alt="Espresso">
+                    <div class="menu-content">
+                        <h3>Classic Espresso</h3>
+                        <p class="price">£3.50</p>
+                        <p class="description">Rich and bold, perfectly extracted</p>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="menu-item">
+                    <img src="assets/images/landingPage/butter-croissant.webp" alt="Croissant">
+                    <div class="menu-content">
+                        <h3>Butter Croissant</h3>
+                        <p class="price">£4.25</p>
+                        <p class="description">Flaky, buttery, made fresh daily</p>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="menu-item">
+                    <img src="assets/images/landingPage/vanilla-latte-png.png" alt="Latte">
+                    <div class="menu-content">
+                        <h3>Vanilla Latte</h3>
+                        <p class="price">£5.50</p>
+                        <p class="description">Smooth espresso with vanilla syrup</p>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-cta">
+                <a href="menu.html" class="btn btn-outline">View Full Menu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews">
+        <div class="container">
+            <h2>What Our Customers Say</h2>
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Best coffee in town! The atmosphere is so cozy and welcoming."</p>
+                    <p class="review-author">- Thembinkosi Matambo</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Amazing pastries and the staff is incredibly friendly!"</p>
+                    <p class="review-author">- Tinaye Sahanga</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location">
+        <div class="container">
+            <h2>Find Us</h2>
+            <div class="location-content">
+                <div class="location-info">
+                    <h3>Visit Our Cafe</h3>
+                    <div class="location-details">
+                        <div class="location-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Shop 19 Trinity Squre, Gateshead, NE8 1AG </span>
+                        </div>
+                        <div class="location-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Mon-Fri: 7am-7pm, Sat-Sun: 8am-6pm</span>
+                        </div>
+                        <div class="location-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+44 191 123 4567</span>
+                        </div>
+                    </div>
+                    <div class="location-cta">
+                        <a href="contact.html" class="btn btn-primary">Get Directions</a>
+                    </div>
+                </div>
+                <div class="location-map">
+                    <iframe
+                       src="https://www.google.com/maps?q=Trinity%20Square%20Gateshead%20NE8%201AG&output=embed"
+                       width="600"
+                       height="450"
+                       style="border:0;"
+                       allowfullscreen=""
+                       loading="lazy"
+                       referrerpolicy="no-referrer-when-downgrade">
+                       </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Magic Corner Cafe</h3>
+                    <p>Serving our community with love, one cup at a time.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Hours</h3>
+                    <p>Monday-Friday: 7am-7pm</p>
+                    <p>Saturday-Sunday: 8am-6pm</p>
+                    <p>Holiday hours may vary</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Magic Corner Cafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- SCRIPTS -->
      <script src="assets/js/main.js"></script>
+     <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

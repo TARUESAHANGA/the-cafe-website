@@ -83,3 +83,69 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+window.addEventListener('load', () => {
+    document.querySelector('.hero-container')?.classList.add('loaded');
+  });
+
+  // Menu Filtering (for menu.html)
+const filterButtons = document.querySelectorAll('.filter-btn');
+const menuItems = document.querySelectorAll('.menu-item');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+        
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        menuItems.forEach(item => {
+            if (filter === 'all' || item.classList.contains(filter)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
+
+function showSection(sectionId) {
+    // Hide all sections
+    const sections = document.querySelectorAll('.menu-section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+
+    // Remove active class from all tabs
+    const tabs = document.querySelectorAll('.menu-tab');
+    tabs.forEach(tab => {
+        tab.classList.remove('active');
+    });
+
+    // Show selected section
+    document.getElementById(sectionId).classList.add('active');
+
+    // Add active class to clicked tab
+    event.target.classList.add('active');
+}
+
+// Add smooth scrolling for better UX
+document.querySelectorAll('.menu-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        window.scrollTo({
+            top: document.querySelector('.menu-container').offsetTop - 100,
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Add loading animation for menu items
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.02)';
+    });
+    
+    item.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+    });
+});
