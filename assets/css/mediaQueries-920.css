@@ -1,0 +1,103 @@
+@media screen and (max-width: 920px) {
+    /* Navigation adjustments */
+    .nav-container {
+        padding: 0 var(--spacing-md);
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: var(--primary-color);
+        flex-direction: column;
+        padding: var(--spacing-lg) 0;
+        transition: var(--transition-smooth);
+        box-shadow: 0 5px 20px var(--shadow);
+        overflow-y: auto;
+        z-index: 999;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-item {
+        width: 100%;
+        text-align: center;
+        position: relative;
+    }
+
+    .nav-link {
+        display: block;
+        padding: var(--spacing-md);
+        font-size: 1.1rem;
+        border-radius: 0;
+    }
+
+    /* Dropdown mobile styles */
+    .dropdown {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: var(--transition-fast);
+        background-color: var(--accent-color);
+        margin: 0 var(--spacing-md);
+        border-radius: 4px;
+    }
+
+    .nav-item.active .dropdown {
+        max-height: 500px;
+    }
+
+    .nav-item > .fa-chevron-down {
+        position: absolute;
+        right: var(--spacing-md);
+        top: 50%;
+        transform: translateY(-50%);
+        padding: var(--spacing-xs);
+        transition: var(--transition-fast);
+    }
+
+    .nav-item.active > .fa-chevron-down {
+        transform: translateY(-50%) rotate(180deg);
+    }
+
+    .dropdown-link {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.95rem;
+    }
+
+    .dropdown-link:hover {
+        padding-left: var(--spacing-lg);
+    }
+
+    /* Mobile menu toggle */
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* Hide desktop-only elements */
+    .nav-item:hover .dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+}
