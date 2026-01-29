@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Cafe - Contact Page</title>
     <!-- Linking Stylesheets -->
-     <link rel="stylesheet" href="assets/css/styles.css">
-     <link rel="stylesheet" href="assets/css/mediaQueries-400.css">
-     <link rel="stylesheet" href="assets/css/mediaQueries-600.css">
-     <link rel="stylesheet" href="assets/css/mediaQueries-920.css">
-     <link rel="stylesheet" href="assets/css/contact.css">
+     <link rel="stylesheet" href="/assets/css/styles.css">
+     <link rel="stylesheet" href="/assets/css/mediaQueries-400.css">
+     <link rel="stylesheet" href="/assets/css/mediaQueries-600.css">
+     <link rel="stylesheet" href="/assets/css/mediaQueries-920.css">
+     <link rel="stylesheet" href="/assets/css/contact.css">
     <!-- Linking Fonts -->
       <link href="https://fonts.googleapis.com/css?family=Jost:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic" rel="stylesheet" />
     <!-- Linking Font Awesome -->
@@ -22,39 +22,38 @@
         <!-- Navigation -->
         <nav>
             <div class="nav-container">
-                <a href="index.html" class="nav-logo"><i class="fas fa-coffee"></i>The Cafe</a>
+                <a href="/index.html" class="nav-logo"><i class="fas fa-coffee"></i>The Cafe</a>
             
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link active">Home</a>
+                        <a href="/index.html" class="nav-link active">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="menu.html" class="nav-link">Menu</a>
+                        <a href="/pages/menu.html" class="nav-link">Menu</a>
                         <i class="fa-solid fa-chevron-down"></i>
                         <ul class="dropdown">
-                            <li class="dropdown-item"><a href="menu.html#coffee" class="dropdown-link">☕ Coffee & Espresso</a></li>
-                            <li class="dropdown-item"><a href="menu.html#tea" class="dropdown-link">🍵 Tea & Beverages</a></li>
-                            <li class="dropdown-item"><a href="menu.html#pastries" class="dropdown-link">🥐 Fresh Pastries</a></li>
-                            <li class="dropdown-item"><a href="menu.html#lunch" class="dropdown-link">🥪 Lunch & Light Bites</a></li>
-                            <li class="dropdown-item"><a href="menu.html#desserts" class="dropdown-link">🍰 Desserts</a></li>
-                            <li class="dropdown-item"><a href="menu.html#kiddies-meal" class="dropdown-link">🍳 Kiddies Meal</a></li>
+                            <li class="dropdown-item"><a href="/pages/menu.html#coffee" class="dropdown-link">☕ Coffee & Espresso</a></li>
+                            <li class="dropdown-item"><a href="/pages/menu.html#tea" class="dropdown-link">🍵 Tea & Beverages</a></li>
+                            <li class="dropdown-item"><a href="/pages/menu.html#pastries" class="dropdown-link">🥐 Fresh Pastries</a></li>
+                            <li class="dropdown-item"><a href="/pages/menu.html#lunch" class="dropdown-link">🥪 Lunch & Light Bites</a></li>
+                            <li class="dropdown-item"><a href="/pages/menu.html#desserts" class="dropdown-link">🍰 Desserts</a></li>
+                            <li class="dropdown-item"><a href="/pages/menu.html#kiddies-meal" class="dropdown-link">🍳 Kiddies Meal</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="about.html" class="nav-link">About</a>
+                        <a href="/pages/about.html" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="products.html" class="nav-link">Products</a>
+                        <a href="/pages/products.html" class="nav-link">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a href="contact.html" class="nav-link">Contact</a>
+                        <a href="/pages/contact.html" class="nav-link">Contact</a>
                     </li>
                 </ul>
     
                 <div class="nav-right">
-                    <a href="#search" class="nav-icon"><i class="fas fa-search"></i></a>
-                    <a href="#cart" class="nav-icon"><i class="fas fa-shopping-cart"></i></a>
-                    <a href="menu.html" class="order-btn">Order Now</a>
+                    <a href="/pages/cart.html" class="nav-icon"><i class="fas fa-shopping-cart"></i></a>
+                    <a href="/pages/menu.html" class="order-btn">Order Now</a>
                     <button class="mobile-menu-toggle">
                         <span></span>
                         <span></span>
@@ -71,7 +70,7 @@
                 <h2>Get in Touch</h2>
                 <p><i class="fa-solid fa-location-dot"></i> 123 High Street, Gateshead, NE8 1AB</p>
                 <p><i class="fa-solid fa-phone"></i> +44 191 123 4567</p>
-                <p><i class="fa-solid fa-envelope"></i> hello@magiccorner.co.uk</p>
+                <p><i class="fa-solid fa-envelope"></i> hello@thecafe.co.uk</p>
         
                 <div class="socials">
                     <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
@@ -83,10 +82,10 @@
             <!-- Right: form -->
             <section class="form-card">
                 <h2>Send us a Message</h2>
-                <form id="contactForm">
+                <form id="contactForm" action="" method="post">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
+                        <input  id="name"  type="text" name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -140,7 +139,7 @@
         </footer>
         
     
-        <script src="assets/js/main.js"></script>
+        <script src="/assets/js/main.js"></script>
     </body>
 </body>
 </html>

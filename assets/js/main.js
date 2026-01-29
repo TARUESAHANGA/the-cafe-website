@@ -1,9 +1,12 @@
-// ===== Main JavaScript for Cafe Website =====
+// ===== Main JavaScript for The Cafe Website =====
 
 document.addEventListener('DOMContentLoaded', function() {
-    // ===== Active Page Highlight =====
+    // ===== Active Page Highlight  =====
     function highlightActivePage() {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const currentPath = window.location.pathname;
+        const currentPage = currentPath.split('/').pop() || 'index.html';
+        const currentFolder = currentPath.includes('/pages/') ? 'pages' : 'root';
+        
         const navLinks = document.querySelectorAll('.nav-link');
         
         navLinks.forEach(link => {
@@ -12,10 +15,25 @@ document.addEventListener('DOMContentLoaded', function() {
             // Remove existing active classes
             link.classList.remove('active');
             
-            // Highlight based on current page
-            if (linkHref === currentPage || 
-                (currentPage === 'index.html' && linkHref === '/') ||
-                (currentPage === '' && linkHref === 'index.html')) {
+            // Normalize paths for comparison
+            let normalizedLinkHref = linkHref;
+            let normalizedCurrentPage = currentPage;
+            
+            if (currentFolder === 'pages') {
+                if (linkHref === '../index.html') {
+                    normalizedLinkHref = 'index.html';
+                } else {
+                    normalizedLinkHref = linkHref.startsWith('../') ? linkHref.substring(3) : linkHref;
+                }
+            } else {
+                if (linkHref.startsWith('pages/')) {
+                    normalizedLinkHref = linkHref.substring(6);
+                }
+            }
+            
+            if (normalizedLinkHref === normalizedCurrentPage || 
+                (normalizedCurrentPage === 'index.html' && normalizedLinkHref === '/') ||
+                (normalizedCurrentPage === '' && normalizedLinkHref === 'index.html')) {
                 link.classList.add('active');
             }
             
@@ -24,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const parentNavItem = link.closest('.nav-item');
                 const parentLink = parentNavItem.querySelector('.nav-link:not(.dropdown-link)');
                 
-                if (parentLink && linkHref === currentPage) {
+                if (parentLink && normalizedLinkHref === normalizedCurrentPage) {
                     parentLink.classList.add('active');
                 }
             }
@@ -40,25 +58,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const navItems = document.querySelectorAll('.nav-item');
 
     // Toggle mobile menu
-    mobileMenuToggle.addEventListener('click', function() {
-        mobileMenuToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        
-        // Add overlay effect
-        if (navMenu.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-    });
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // Add overlay effect
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+    }
 
     // Close mobile menu when clicking on a link
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            mobileMenuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
+            if (mobileMenuToggle) {
+                mobileMenuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
             
             // Update active highlight after navigation
             setTimeout(highlightActivePage, 100);
@@ -105,6 +127,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth',
                     block: 'start'
                 });
+                
+                // Update URL without page jump
+                if (history.pushState) {
+                    history.pushState(null, null, targetId);
+                }
             }
         });
     });
@@ -118,7 +145,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
             const sectionId = section.getAttribute('id');
-            const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+            
+             const navLink = document.querySelector(`.nav-link[href*="#${sectionId}"]`);
 
             if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
                 document.querySelectorAll('.nav-link').forEach(link => {
@@ -134,66 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', updateActiveLink);
 
-    // ===== Enhanced Search Functionality =====
-    const searchIcon = document.querySelector('.fa-search');
-    
-    if (searchIcon) {
-        searchIcon.parentElement.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Create search modal or redirect to search page
-            const searchModal = document.createElement('div');
-            searchModal.className = 'search-modal';
-            searchModal.innerHTML = `
-                <div class="search-modal-content">
-                    <span class="close-search">&times;</span>
-                    <h3>Search our menu</h3>
-                    <input type="text" placeholder="Search for coffee, pastries, etc..." class="search-input">
-                    <div class="search-results"></div>
-                </div>
-            `;
-            
-            document.body.appendChild(searchModal);
-            
-            // Close search modal
-            const closeSearch = searchModal.querySelector('.close-search');
-            closeSearch.addEventListener('click', function() {
-                document.body.removeChild(searchModal);
-            });
-            
-            // Close on outside click
-            searchModal.addEventListener('click', function(e) {
-                if (e.target === searchModal) {
-                    document.body.removeChild(searchModal);
-                }
-            });
-            
-            // Search functionality
-            const searchInput = searchModal.querySelector('.search-input');
-            const searchResults = searchModal.querySelector('.search-results');
-            
-            searchInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase();
-                
-                if (query.length > 2) {
-                    // Simulate search results
-                    const results = [
-                        'Espresso - $3.50',
-                        'Cappuccino - $4.25',
-                        'Croissant - $3.00',
-                        'Blueberry Muffin - $2.75'
-                    ].filter(item => item.toLowerCase().includes(query));
-                    
-                    searchResults.innerHTML = results.map(result => 
-                        `<div class="search-result-item">${result}</div>`
-                    ).join('');
-                } else {
-                    searchResults.innerHTML = '';
-                }
-            });
-        });
-    }
-
     // ===== Cart Functionality =====
     const cartIcon = document.querySelector('.fa-shopping-cart');
     let cartCount = 0;
@@ -202,23 +170,12 @@ document.addEventListener('DOMContentLoaded', function() {
         cartIcon.parentElement.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Show cart notification or redirect to cart page
-            const cartNotification = document.createElement('div');
-            cartNotification.className = 'cart-notification';
-            cartNotification.innerHTML = `
-                <div class="cart-notification-content">
-                    <p>Cart is empty</p>
-                    <a href="cart.html">View Cart</a>
-                </div>
-            `;
+            // Determine correct cart page path based on current location
+            const currentPath = window.location.pathname;
+            const cartPath = currentPath.includes('/pages/') ? 'cart.html' : 'pages/cart.html';
             
-            document.body.appendChild(cartNotification);
-            
-            setTimeout(() => {
-                if (document.body.contains(cartNotification)) {
-                    document.body.removeChild(cartNotification);
-                }
-            }, 3000);
+            // Redirect to cart page instead of showing notification
+            window.location.href = cartPath;
         });
     }
 
@@ -230,7 +187,9 @@ document.addEventListener('DOMContentLoaded', function() {
             originalShowSection(sectionId);
             
             // Update URL hash without jumping
-            history.pushState(null, null, sectionId);
+            const currentPath = window.location.pathname;
+            const basePath = currentPath.split('#')[0];
+            history.replaceState(null, null, basePath + sectionId);
             
             // Update active states for menu navigation
             const menuTabs = document.querySelectorAll('.menu-tab');
@@ -244,10 +203,68 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
+    // ===== Mobile Quick Menu =====
+    const quickNav = document.getElementById('quick-nav');
+    
+    if (quickNav) {
+        quickNav.addEventListener('change', function() {
+            const selectedValue = this.value;
+            
+            if (selectedValue) {
+                this.style.opacity = '0.7';
+                
+                // Determine correct path based on current location
+                const currentPath = window.location.pathname;
+                const isInPagesFolder = currentPath.includes('/pages/');
+                
+                let finalUrl = selectedValue;
+                
+                if (isInPagesFolder) {
+                    if (selectedValue === 'index.html') {
+                        finalUrl = '../index.html';
+                    } else if (!selectedValue.startsWith('../') && !selectedValue.includes('#')) {
+                        finalUrl = selectedValue;
+                    }
+                } else {
+                    if (selectedValue !== 'index.html' && !selectedValue.includes('#') && !selectedValue.startsWith('http')) {
+                        finalUrl = 'pages/' + selectedValue;
+                    }
+                }
+                
+                // Smooth scroll 
+                if (selectedValue.includes('#')) {
+                    const targetId = selectedValue.split('#')[1];
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        // Reset select after a moment
+                        setTimeout(() => {
+                            this.selectedIndex = 0;
+                            this.style.opacity = '1';
+                        }, 1000);
+                    } else {
+                        window.location.href = finalUrl;
+                    }
+                } else {
+                    window.location.href = finalUrl;
+                }
+            }
+        });
+        
+        // Reset to placeholder when user returns using back button
+        window.addEventListener('pageshow', function() {
+            quickNav.selectedIndex = 0;
+            quickNav.style.opacity = '1';
+        });
+    }
+
     // ===== Window Resize Handler =====
     function handleResize() {
         if (window.innerWidth > 920) {
-            mobileMenuToggle.classList.remove('active');
+            if (mobileMenuToggle) {
+                mobileMenuToggle.classList.remove('active');
+            }
             navMenu.classList.remove('active');
             document.body.style.overflow = '';
             
@@ -277,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== Loading Animation =====
     window.addEventListener('load', function() {
         document.body.classList.add('loaded');
-        highlightActivePage(); // Ensure active page is highlighted after load
+        highlightActivePage();
     });
 
     // ===== Utility Functions =====

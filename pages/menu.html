@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Cafe - Menu Page</title>
     <!-- Linking Stylesheets -->
-     <link rel="stylesheet" href="assets/css/styles.css">
-     <link rel="stylesheet" href="assets/css/menu.css">
-     <link rel="stylesheet" href="assets/css/mediaQueries-400.css">
-     <link rel="stylesheet" href="assets/css/mediaQueries-600.css">
-     <link rel="stylesheet" href="assets/css/mediaQueries-920.css">
+     <link rel="stylesheet" href="/assets/css/styles.css">
+     <link rel="stylesheet" href="/assets/css/menu.css">
+     <link rel="stylesheet" href="/assets/css/mediaQueries-400.css">
+     <link rel="stylesheet" href="/assets/css/mediaQueries-600.css">
+     <link rel="stylesheet" href="/assets/css/mediaQueries-920.css">
     <!-- Linking Fonts -->
       <link href="https://fonts.googleapis.com/css?family=Jost:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic" rel="stylesheet" />
     <!-- Linking Font Awesome -->
@@ -24,11 +24,11 @@
         <!-- Navigation -->
         <nav>
             <div class="nav-container">
-                <a href="index.html" class="nav-logo"><i class="fas fa-coffee"></i>The Cafe</a>
+                <a href="../index.html" class="nav-logo"><i class="fas fa-coffee"></i>The Cafe</a>
             
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link active">Home</a>
+                        <a href="../index.html" class="nav-link active">Home</a>
                     </li>
                     <li class="nav-item">
                         <a href="menu.html" class="nav-link">Menu</a>
@@ -43,7 +43,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="about.html" class="nav-link">About</a>
+                        <a href="./about.html" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
                         <a href="products.html" class="nav-link">Products</a>
@@ -54,7 +54,6 @@
                 </ul>
     
                 <div class="nav-right">
-                    <a href="#menu-nav" class="nav-icon"><i class="fa-solid fa-book"></i></a>
                     <a href="#search" class="nav-icon"><i class="fas fa-search"></i></a>
                     <a href="cart.html" class="nav-icon">
                         <i class="fas fa-shopping-cart"></i>
@@ -68,10 +67,29 @@
                     </button>
                 </div>
                
+ 
             </div>
         </nav>
         <!-- Main Content -->
         <main id="main" class="main-container">  
+            
+            <!-- Mobile Quick Menu Dropdown -->
+            <div class="mobile-quick-menu">
+                <label for="quick-nav" class="visually-hidden">Quick Menu Navigation</label>
+                <select id="quick-nav" class="quick-nav-select" onchange="location = this.value;">
+                    <option value="" selected disabled>☰ Quick Menu Access</option>
+                    <optgroup label="Menu Categories">
+                        <option value="menu.html#coffee">☕ Coffee & Espresso</option>
+                        <option value="menu.html#tea">🍵 Tea & Beverages</option>
+                        <option value="menu.html#pastries">🥐 Fresh Pastries</option>
+                        <option value="menu.html#lunch">🥪 Lunch & Light Bites</option>
+                        <option value="menu.html#desserts">🍰 Desserts</option>
+                        <option value="menu.html#kiddies-meal">🍳 Kiddies Meal</option>
+                    </optgroup>
+
+                </select>
+            </div>
+            
             <!-- Sidebar Menu Tabs -->
             <div class="menu-sidebar">
            
@@ -84,14 +102,13 @@
                         <button class="menu-tab" onclick="showSection('#breakfast')">🍳 Breakfast</button>
                         <button class="menu-tab" onclick="showSection('#lunch')">🥪 Lunch & Light Bites</button>
                         <button class="menu-tab" onclick="showSection('#desserts')">🍰 Desserts</button>
-                        <button class="menu-tab" onclick="showSection('#kiddies')">🍳 Kiddies Meal</button>
+                        <button class="menu-tab" onclick="showSection('#kiddies')">🧸 Kiddies Meal</button>
                     </div>
                 </aside>
     
             </div>
-          
-    
-        
+      
+      
             <!-- Menu Container -->
             <div class="menu-container">
                 <!-- Coffee Section -->
@@ -1087,10 +1104,10 @@
             </div>
         </footer>
 
-        <script src="assets/js/menu.js"></script>
-        <script src="assets/js/main.js"></script>
-        <script src="assets/js/cart.js"></script>
-        <script src="assets/js/menu-cart.js"></script>
+        <script src="/assets/js/main.js"></script>
+        <script src="../assets/js/menu.js"></script>
+        <script src="../assets/js/cart.js"></script>
+        <script src="../assets/js/menu-cart.js"></script>
     </body>
 </body>
 </html>
