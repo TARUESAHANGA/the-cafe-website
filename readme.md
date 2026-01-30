@@ -19,6 +19,8 @@ A fully responsive, modern cafe website built with HTML, CSS, and JavaScript. Fe
 - No build tools or dependencies required
 - Local server recommended for testing (Live Server extension or `python -m http.server`)
 
+
+
 ## 📁 Project Structure
 the-cafe-website/
 ├── 📁 assets
@@ -59,18 +61,11 @@ the-cafe-website/
 
 ## 🚀 Quick Start
 
-### Option 1: Direct Open
+### Direct Open
 1. Clone or download the project files
 2. Open `index.html` in your web browser
 3. No build process required - runs directly in browser
 
-### Option 2: Local Server (Recommended)
-```bash
-# Using Python 3
-python -m http.server 8000
-
-# Or using Node.js (if installed)
-npx serve
 
 ## 🔗 Navigation Structure
 Root: index.html (Homepage)
