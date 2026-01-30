@@ -1,3 +1,4 @@
+/* ===== CSS Variables ===== */
 :root {
     /* Colors */
     --primary-color: #2c1810;
@@ -28,6 +29,7 @@
     --transition-smooth: 0.5s ease;
 }
 
+/* ===== Global Styles ===== */
 * {
     margin: 0;
     padding: 0;
@@ -61,6 +63,23 @@ img {
     height: auto;
 }
 
+/* ===== Scrollbar styling ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
 
 /* Skip Link */
 .skip-link {

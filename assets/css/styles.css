@@ -63,6 +63,25 @@ img {
     height: auto;
 }
 
+/* ===== Scrollbar styling ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+
 /* ===== Skip Link ===== */
 .skip-link {
     position: absolute;

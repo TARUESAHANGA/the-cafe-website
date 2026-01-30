@@ -1,5 +1,5 @@
 @media screen and (max-width: 400px) {
-    /* Navigation */
+    /* ===== NAVIGATION ===== */
     .nav-container {
         height: 70px;
         padding: 0 var(--spacing-xs);
@@ -55,5 +55,76 @@
     .mobile-menu-toggle {
         width: 25px;
         height: 20px;
+    }
+
+    /* ===== CONTACT PAGE ===== */
+    .contact-wrapper {
+        margin: var(--spacing-lg) auto;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .info-card,
+    .form-card {
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 0.6rem var(--spacing-sm);
+        font-size: 0.95rem;
+    }
+    
+    .btn-submit {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .socials {
+        gap: var(--spacing-xs);
+    }
+    
+    .socials a {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .contact-info-item {
+        margin-bottom: var(--spacing-sm);
+    }
+
+
+    /* ===== ABOUT PAGE ===== */
+    .about-content {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .story-section {
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .story-text h2,
+    .section-header h2,
+    .section-title,
+    .cta-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .story-image {
+        height: 250px;
+    }
+    
+    .skill-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .project-content {
+        padding: var(--spacing-md);
+    }
+    
+    .section-title::after {
+        width: 6rem;
     }
 }

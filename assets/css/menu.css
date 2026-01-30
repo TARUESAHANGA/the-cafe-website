@@ -1,3 +1,4 @@
+/* ===== CSS Variables ===== */
 :root {
     /* Colors */
     --primary-color: #2c1810;
@@ -7,12 +8,6 @@
     --text-light: #6B4423;
     --bg-light: #FFF8F3;
     --bg-white: #FFFFFF;
-    --cream: #FFF8F3;
-    --primary-brown: #8B4513;
-    --dark-brown: #2C1810;
-    --warm-orange: #D2691E;
-    --warm-red: #DC143C;
-    --accent-green: #228B22;
     --caramel: #bf360c;
     --milk: #f5f5f5;
     --shadow: rgba(0, 0, 0, 0.1);
@@ -34,6 +29,7 @@
     --transition-smooth: 0.5s ease;
 }
 
+/* ===== Global Styles ===== */
 * {
     margin: 0;
     padding: 0;
@@ -67,6 +63,24 @@ img {
     height: auto;
 }
 
+/* ===== Scrollbar styling ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
 
 /* Main Container Layout */
 .main-container {
@@ -85,7 +99,7 @@ img {
     width: 300px;
     height: 100vh;
     flex-shrink: 0; 
-    background: var(--accent-color); 
+    background: var(--bg-light); 
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     z-index: 100; 
 }
@@ -97,7 +111,7 @@ img {
     height: 100%;
     padding: 30px 15px;
     background: var(--cream);
-    border-right: 2px solid var(--primary-brown);
+    border-right: 2px solid var(--primary-color);
 }
 
 .menu-nav-container {
@@ -110,7 +124,7 @@ img {
 
 .menu-tab {
     background: transparent;
-    border: 2px solid var(--primary-brown);
+    border: 2px solid var(--primary-color);
     color: var(--primary-brown);
     padding: 0.8rem 1.5rem;
     border-radius: 50px;
@@ -125,8 +139,8 @@ img {
 
 .menu-tab:hover,
 .menu-tab.active {
-    background: var(--primary-brown);
-    color: white;
+    background: var(--accent-color);
+    color: var(--caramel);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
 }
@@ -314,8 +328,8 @@ img {
 
 /* Special Offers Section */
 .special-offers {
-    background: linear-gradient(135deg, var(--warm-orange) 0%, var(--primary-brown) 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+    color: var(--milk);
     padding: 3rem;
     border-radius: 20px;
     margin: 3rem 0;
