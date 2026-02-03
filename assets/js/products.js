@@ -1,35 +1,55 @@
-// Products page cart integration
+/**
+ * Products page cart integration for The Cafe Website
+ * Integrates with the existing CartManager class
+ */
+
 class ProductCart {
     constructor() {
-        this.cart = new ShoppingCart();
+        // Use the existing CartManager instance or create a reference to it
+        this.cartManager = window.cartManager;
         this.init();
     }
 
     init() {
-        this.updateCartBadge();
         this.bindProductEvents();
+        this.updateCartBadge();
     }
 
     bindProductEvents() {
-        // Add to cart buttons
-        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        // Add to cart buttons on product cards
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn, .btn-add-to-cart');
         addToCartButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 const productCard = e.target.closest('.product-card, .featured-card, .offer-card');
-                const productData = this.extractProductData(productCard);
-                this.addProductToCart(productData);
+                if (productCard) {
+                    const productData = this.extractProductData(productCard);
+                    this.addProductToCart(productData);
+                }
             });
         });
+
+        // Also bind to any onclick addToCart calls in HTML
+        window.addToCart = (id, name, price, image) => {
+            this.addProductToCart({
+                id: id,
+                name: name,
+                price: parseFloat(price),
+                image: image || '',
+                quantity: 0,
+                category: 'products'
+            });
+        };
     }
 
     extractProductData(productCard) {
         let title, price, description, category, image;
 
         if (productCard.classList.contains('product-card') || productCard.classList.contains('featured-card')) {
-            title = productCard.querySelector('.product-title, .featured-content h3').textContent.trim();
-            price = productCard.querySelector('.product-price, .featured-price').textContent.trim();
-            description = productCard.querySelector('.product-description, .featured-content p').textContent.trim();
+            title = productCard.querySelector('.product-title, .featured-content h3')?.textContent.trim();
+            price = productCard.querySelector('.product-price, .featured-price')?.textContent.trim();
+            description = productCard.querySelector('.product-description, .featured-content p')?.textContent.trim();
             category = productCard.dataset.category || 'general';
             
             // Get icon as image placeholder
@@ -39,20 +59,24 @@ class ProductCart {
                 image = this.getProductImage(iconClass);
             }
         } else if (productCard.classList.contains('offer-card')) {
-            title = productCard.querySelector('.offer-title').textContent.trim();
-            price = productCard.querySelector('.offer-price').textContent.trim();
-            description = productCard.querySelector('.offer-description').textContent.trim();
+            title = productCard.querySelector('.offer-title')?.textContent.trim();
+            price = productCard.querySelector('.offer-price')?.textContent.trim();
+            description = productCard.querySelector('.offer-description')?.textContent.trim();
             category = 'special-offers';
             image = 'https://via.placeholder.com/150x150/8B4513/FFFFFF?text=Special+Offer';
         }
 
+        // Generate a consistent ID
+        const id = 'prod_' + title.toLowerCase().replace(/[^a-z0-9]/g, '_');
+
         return {
-            id: this.generateProductId(title),
+            id: id,
             name: title,
             price: this.parsePrice(price),
-            description: description,
+            description: description || '',
             category: category,
-            image: image
+            image: image || 'https://via.placeholder.com/150x150/D4A574/FFFFFF?text=Product',
+            quantity: 1
         };
     }
 
@@ -68,64 +92,91 @@ class ProductCart {
             'fas fa-calendar': 'https://via.placeholder.com/150x150/FF6347/FFFFFF?text=Subscription'
         };
 
-        return iconMap[iconClass] || 'https://via.placeholder.com/150x150/D4A574/FFFFFF?text=Product';
-    }
-
-    generateProductId(name) {
-        return 'product_' + name.toLowerCase().replace(/[^a-z0-9]/g, '_') + '_' + Date.now();
+        // Check if any key exists in iconClass
+        for (let [key, value] of Object.entries(iconMap)) {
+            if (iconClass.includes(key)) return value;
+        }
+        
+        return 'https://via.placeholder.com/150x150/D4A574/FFFFFF?text=Product';
     }
 
     parsePrice(priceString) {
         // Extract numeric value from price string (e.g., "£24.99" -> 24.99)
+        if (!priceString) return 0;
         const match = priceString.match(/[\d.]+/);
         return match ? parseFloat(match[0]) : 0;
     }
 
     addProductToCart(productData) {
-        // Add to cart using the existing ShoppingCart class
-        if (typeof cart !== 'undefined') {
-            cart.addToCart(productData);
-            this.updateCartBadge();
-            this.showAddToCartFeedback(productData.name);
+        // Use the existing CartManager from cart.js
+        if (this.cartManager) {
+            this.cartManager.addItem(productData);
+        } else if (window.cartManager) {
+            window.cartManager.addItem(productData);
         } else {
-            // Fallback: store in localStorage for cart page
-            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-            
-            const existingItem = cartItems.find(item => item.name === productData.name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cartItems.push({
-                    ...productData,
-                    quantity: 1
-                });
-            }
-            
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            this.updateCartBadge();
-            this.showAddToCartFeedback(productData.name);
+            // Fallback: try to initialize or use localStorage directly
+            console.warn('CartManager not found, initializing fallback...');
+            this.fallbackAddToCart(productData);
         }
+        
+        this.updateCartBadge();
+    }
+
+    fallbackAddToCart(productData) {
+        // Direct localStorage manipulation using cafeCart key
+        let cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
+        
+        const existingItem = cart.find(item => item.id === productData.id);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push(productData);
+        }
+        
+        localStorage.setItem('cafeCart', JSON.stringify(cart));
+        this.showAddToCartFeedback(productData.name);
     }
 
     updateCartBadge() {
-        const cartBadge = document.querySelector('.cart-badge');
-        if (cartBadge) {
-            let cartItems = [];
+        // Use CartManager's updateCartCount method if available
+        if (this.cartManager && this.cartManager.updateCartCount) {
+            this.cartManager.updateCartCount();
+        } else if (window.cartManager && window.cartManager.updateCartCount) {
+            window.cartManager.updateCartCount();
+        } else {
+            // Fallback: manual badge update
+            const cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             
-            if (typeof cart !== 'undefined') {
-                cartItems = cart.cartItems;
-            } else {
-                cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-            }
-            
-            const totalItems = cartItems.reduce((sum, item) => sum + (item.quantity || 0), 0);
-            cartBadge.textContent = totalItems;
-            cartBadge.style.display = totalItems > 0 ? 'block' : 'none';
+            const cartIcons = document.querySelectorAll('.fa-shopping-cart');
+            cartIcons.forEach(icon => {
+                let badge = icon.parentElement.querySelector('.cart-badge');
+                if (!badge && totalItems > 0) {
+                    badge = document.createElement('span');
+                    badge.className = 'cart-badge';
+                    icon.parentElement.style.position = 'relative';
+                    icon.parentElement.appendChild(badge);
+                }
+                
+                if (badge) {
+                    badge.textContent = totalItems > 99 ? '99+' : totalItems;
+                    badge.style.display = totalItems > 0 ? 'flex' : 'none';
+                }
+            });
         }
     }
 
     showAddToCartFeedback(productName) {
-        // Create a temporary success message
+        // Use CartManager's notification if available
+        if (this.cartManager && this.cartManager.showNotification) {
+            this.cartManager.showNotification(`${productName} added to cart!`);
+            return;
+        }
+
+        // Fallback notification
+        const existing = document.querySelector('.cart-feedback');
+        if (existing) existing.remove();
+
         const message = document.createElement('div');
         message.className = 'cart-feedback';
         message.innerHTML = `
@@ -135,175 +186,97 @@ class ProductCart {
             </div>
         `;
         
+        message.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+        `;
+        
         document.body.appendChild(message);
         
-        // Add CSS for the feedback message
-        if (!document.querySelector('#cart-feedback-styles')) {
-            const styles = document.createElement('style');
-            styles.id = 'cart-feedback-styles';
-            styles.textContent = `
-                .cart-feedback {
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: #4caf50;
-                    color: white;
-                    padding: 1rem 1.5rem;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                    z-index: 1000;
-                    animation: slideInRight 0.3s ease;
-                }
-                
-                .feedback-content {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                }
-                
-                .cart-feedback i {
-                    font-size: 1.2rem;
-                }
-                
-                @keyframes slideInRight {
-                    from {
-                        transform: translateX(100%);
-                        opacity: 0;
-                    }
-                    to {
-                        transform: translateX(0);
-                        opacity: 1;
-                    }
-                }
-            `;
-            document.head.appendChild(styles);
-        }
-        
-        // Remove message after 3 seconds
         setTimeout(() => {
-            message.style.animation = 'slideInRight 0.3s ease reverse';
+            message.style.animation = 'slideOut 0.3s ease';
             setTimeout(() => message.remove(), 300);
         }, 3000);
     }
 }
 
-// Initialize products cart when DOM is loaded
+// ============================================
+// INITIALIZATION
+// ============================================
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Make sure ShoppingCart is available
-    if (typeof ShoppingCart === 'undefined') {
-        // Fallback ShoppingCart implementation for products page
-        window.ShoppingCart = class {
-            constructor() {
-                this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-            }
-            
-            addToCart(item) {
-                const existingItem = this.cartItems.find(cartItem => cartItem.id === item.id);
-                
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    this.cartItems.push({
-                        ...item,
-                        quantity: 1
-                    });
-                }
-                
-                localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-            }
-        };
-    }
-    
-    // Initialize products cart
-    new ProductCart();
+    // Wait a moment to ensure CartManager is loaded first
+    setTimeout(() => {
+        window.productCart = new ProductCart();
+    }, 100);
 });
 
-// Update the existing addToCart function calls in your HTML
-function addToCart(name, price) {
+// ============================================
+// GLOBAL FUNCTIONS FOR INLINE HTML CALLS
+// ============================================
+
+// This function can be called directly from HTML onclick attributes
+function addToCart(id, name, price, image) {
     const productData = {
-        id: 'product_' + name.toLowerCase().replace(/[^a-z0-9]/g, '_') + '_' + Date.now(),
+        id: id,
         name: name,
-        price: parseFloat(price.replace('£', '')),
-        description: 'Product from The Cafe',
-        category: 'general',
-        image: 'https://via.placeholder.com/150x150/D4A574/FFFFFF?text=Product'
+        price: parseFloat(price),
+        image: image || '',
+        quantity: 1,
+        category: 'products'
     };
     
-    // Add to cart using the ProductCart system
+    // Try to use ProductCart instance
     if (window.productCart) {
         window.productCart.addProductToCart(productData);
+    } else if (window.cartManager) {
+        window.cartManager.addItem(productData);
     } else {
-        // Fallback direct to localStorage
-        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        const existingItem = cartItems.find(item => item.name === name);
+        // Ultimate fallback
+        let cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
+        const existingItem = cart.find(item => item.id === id);
         
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
-            cartItems.push({
-                ...productData,
-                quantity: 1
-            });
+            cart.push(productData);
         }
         
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        localStorage.setItem('cafeCart', JSON.stringify(cart));
         
-        // Show feedback
-        const message = document.createElement('div');
-        message.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4caf50;
-            color: white;
-            padding: 1rem;
-            border-radius: 5px;
-            z-index: 1000;
-        `;
-        message.textContent = `${name} added to cart!`;
-        document.body.appendChild(message);
-        
-        setTimeout(() => message.remove(), 3000);
+        // Show simple notification
+        alert(`${name} added to cart!`);
     }
+    
+    return false; // Prevent default link behavior
 }
 
-function addToCart(id, name, price) {
-    // Get existing cart
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // Check if item exists
-    const existingItem = cart.find(item => item.id === id);
-    
-    if (existingItem) {
-        existingItem.quantity += 1;
+// Update badge on page load
+function updateCartBadge() {
+    if (window.cartManager && window.cartManager.updateCartCount) {
+        window.cartManager.updateCartCount();
     } else {
-        cart.push({
-            id: id,
-            name: name,
-            price: price,
-            quantity: 1,
+        const cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        
+        document.querySelectorAll('.cart-badge').forEach(badge => {
+            badge.textContent = totalItems;
+            badge.style.display = totalItems > 0 ? 'flex' : 'none';
         });
     }
-    
-    // Save cart
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // Update badge
-    updateCartBadge();
-    
-    // Show success message
-    showNotification(`${name} added to cart!`);
 }
 
-function updateCartBadge() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const badge = document.querySelector('.cart-badge');
-    if (badge) {
-        badge.textContent = totalItems;
-        badge.style.display = totalItems > 0 ? 'flex' : 'none';
-    }
-}
-
-// Initialize on page load
+// Initialize badge on load
 document.addEventListener('DOMContentLoaded', updateCartBadge);

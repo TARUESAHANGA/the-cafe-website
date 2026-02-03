@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Cafe Website - Cart Page</title>
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="/assets/css/cart.css">
-    <link rel="stylesheet" href="/assets/css/mediaQueries-400.css">
-    <link rel="stylesheet" href="/assets/css/mediaQueries-600.css">
-    <link rel="stylesheet" href="/assets/css/mediaQueries-920.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/cart.css">
+    <link rel="stylesheet" href="../assets/css/mediaQueries-400.css">
+    <link rel="stylesheet" href="../assets/css/mediaQueries-600.css">
+    <link rel="stylesheet" href="../assets/css/mediaQueries-920.css">
     <!-- Linking Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -18,38 +18,38 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="/index.html" class="nav-logo"><i class="fas fa-coffee"></i>The Cafe</a>
+            <a href="../index.html" class="nav-logo"><i class="fas fa-coffee"></i>The Cafe</a>
         
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="/index.html" class="nav-link active">Home</a>
+                    <a href="../index.html" class="nav-link active">Home</a>
                 </li>
                 <li class="nav-item">
                     <a href="/pages/menu.html" class="nav-link">Menu</a>
                     <i class="fa-solid fa-chevron-down"></i>
                     <ul class="dropdown">
-                        <li class="dropdown-item"><a href="menu.html#coffee" class="dropdown-link">☕ Coffee & Espresso</a></li>
-                        <li class="dropdown-item"><a href="menu.html#tea" class="dropdown-link">🍵 Tea & Beverages</a></li>
-                        <li class="dropdown-item"><a href="menu.html#pastries" class="dropdown-link">🥐 Fresh Pastries</a></li>
-                        <li class="dropdown-item"><a href="menu.html#lunch" class="dropdown-link">🥪 Lunch & Light Bites</a></li>
-                        <li class="dropdown-item"><a href="menu.html#desserts" class="dropdown-link">🍰 Desserts</a></li>
-                        <li class="dropdown-item"><a href="menu.html#kiddies-meal" class="dropdown-link">🍳 Kiddies Meal</a></li>
+                        <li class="dropdown-item"><a href="./menu.html#coffee" class="dropdown-link">☕ Coffee & Espresso</a></li>
+                        <li class="dropdown-item"><a href="./menu.html#tea" class="dropdown-link">🍵 Tea & Beverages</a></li>
+                        <li class="dropdown-item"><a href="./menu.html#pastries" class="dropdown-link">🥐 Fresh Pastries</a></li>
+                        <li class="dropdown-item"><a href="./menu.html#lunch" class="dropdown-link">🥪 Lunch & Light Bites</a></li>
+                        <li class="dropdown-item"><a href="./menu.html#desserts" class="dropdown-link">🍰 Desserts</a></li>
+                        <li class="dropdown-item"><a href="./menu.html#kiddies-meal" class="dropdown-link">🧸 Kiddies Meal</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/about.html" class="nav-link">About</a>
+                    <a href="./about.html" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/products.html" class="nav-link">Products</a>
+                    <a href="./products.html" class="nav-link">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/contact.html" class="nav-link">Contact</a>
+                    <a href="./contact.html" class="nav-link">Contact</a>
                 </li>
             </ul>
 
             <div class="nav-right">
-                <a href="/pages/cart.html" class="nav-icon"><i class="fas fa-shopping-cart"></i></a>
-                <a href="/pages/menu.html" class="order-btn">Order Now</a>
+                <a href="./cart.html" class="nav-icon"><i class="fas fa-shopping-cart"></i></a>
+                <a href="./menu.html" class="order-btn">Order Now</a>
                 <button class="mobile-menu-toggle">
                     <span></span>
                     <span></span>
@@ -96,15 +96,14 @@
                             <span id="total">£0.00</span>
                         </div>
                         
-                        <button class="btn-checkout" id="checkoutBtn">
-                            <i class="fas fa-credit-card"></i>
-                            Proceed to Checkout
-                        </button>
-                        
-                        <button class="btn-clear" id="clearCartBtn">
-                            <i class="fas fa-trash"></i>
-                            Clear Cart
-                        </button>
+                        <div class="cart-actions">
+                            <button id="clearCartBtn" class="btn-secondary">
+                                <i class="fas fa-trash-alt"></i> Clear Cart
+                            </button>
+                            <button id="checkoutBtn" class="btn-primary">
+                                <i class="fas fa-credit-card"></i> Checkout
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -128,10 +127,10 @@
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="../index.html">Home</a></li>
-                        <li><a href="/pages/menu.html">Menu</a></li>
-                        <li><a href="/pages/about.html">About</a></li>
-                        <li><a href="/pages/products.html">Products</a></li>
-                        <li><a href="/pages/contact.html">Contact</a></li>
+                        <li><a href="./menu.html">Menu</a></li>
+                        <li><a href="./products.html">Products</a></li>
+                        <li><a href="./about.html">About</a></li>
+                        <li><a href="./contact.html">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
