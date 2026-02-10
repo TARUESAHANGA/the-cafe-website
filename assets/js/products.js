@@ -1,7 +1,5 @@
-
 class ProductCart {
     constructor() {
-        // Use the existing CartManager instance or create a reference to it
         this.cartManager = window.cartManager;
         this.init();
     }
@@ -12,7 +10,6 @@ class ProductCart {
     }
 
     bindProductEvents() {
-        // Add to cart buttons on product cards
         const addToCartButtons = document.querySelectorAll('.add-to-cart-btn, .btn-add-to-cart');
         addToCartButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -26,7 +23,6 @@ class ProductCart {
             });
         });
 
-        // Also bind to any onclick addToCart calls in HTML
         window.addToCart = (id, name, price, image) => {
             this.addProductToCart({
                 id: id,
@@ -104,13 +100,11 @@ class ProductCart {
     }
 
     addProductToCart(productData) {
-        // Use the existing CartManager from cart.js
         if (this.cartManager) {
             this.cartManager.addItem(productData);
         } else if (window.cartManager) {
             window.cartManager.addItem(productData);
         } else {
-            // Fallback: try to initialize or use localStorage directly
             console.warn('CartManager not found, initializing fallback...');
             this.fallbackAddToCart(productData);
         }
@@ -134,7 +128,6 @@ class ProductCart {
     }
 
     updateCartBadge() {
-        // Use CartManager's updateCartCount method if available
         if (this.cartManager && this.cartManager.updateCartCount) {
             this.cartManager.updateCartCount();
         } else if (window.cartManager && window.cartManager.updateCartCount) {
@@ -163,13 +156,12 @@ class ProductCart {
     }
 
     showAddToCartFeedback(productName) {
-        // Use CartManager's notification if available
         if (this.cartManager && this.cartManager.showNotification) {
             this.cartManager.showNotification(`${productName} added to cart!`);
             return;
         }
 
-        // Fallback notification
+        // Notification
         const existing = document.querySelector('.cart-feedback');
         if (existing) existing.remove();
 
@@ -202,8 +194,8 @@ class ProductCart {
         document.body.appendChild(message);
         
         setTimeout(() => {
-            message.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => message.remove(), 300);
+            message.style.animation = 'slideOut 0.6s ease';
+            setTimeout(() => message.remove(), 600);
         }, 3000);
     }
 }

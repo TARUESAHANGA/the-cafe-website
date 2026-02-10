@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ===== Add Item to Cart =====
     function addToCart(itemData) {
-        // Ensure item has all required properties
         const newItem = {
             id: Date.now().toString(),
             name: itemData.name,
@@ -49,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
             detail: { cart: cart, item: newItem } 
         }));
         
-        console.log('Cart updated:', cart); // Debug log
+        console.log('Cart updated:', cart);
     }
     
     // ===== Save Cart to LocalStorage =====
@@ -84,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Remove after delay
         setTimeout(() => {
             notification.classList.remove('show');
-            setTimeout(() => notification.remove(), 300);
+            setTimeout(() => notification.remove(), 500);
         }, 3000);
     }
     
@@ -100,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const menuItems = document.querySelectorAll('.menu-item');
         
         menuItems.forEach((item, index) => {
-            // Skip if already has button
             if (item.querySelector('.add-to-cart-btn')) return;
             
             const priceDiv = item.querySelector('.item-price');
@@ -108,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const descDiv = item.querySelector('.item-description');
             
             if (priceDiv && nameDiv) {
-                // Create button container if needed
                 let btnContainer = item.querySelector('.item-actions');
                 if (!btnContainer) {
                     btnContainer = document.createElement('div');
@@ -258,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         @media (max-width: 768px) {
             .add-to-cart-btn {
-                width: 40px;
+                width: 50%;
                 height: 40px;
                 font-size: 16px;
             }

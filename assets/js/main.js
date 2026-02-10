@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
             
-            // Guard against missing or empty hrefs
+            // Guard against missing or empty href values
             if (!targetId || targetId === '#') return;
             
             e.preventDefault();

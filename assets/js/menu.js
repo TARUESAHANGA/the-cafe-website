@@ -1,5 +1,4 @@
 // ===== Menu Page Specific JavaScript =====
-
 document.addEventListener('DOMContentLoaded', function() {
     
     // ===== Section Navigation =====
@@ -19,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (targetSection) {
             targetSection.classList.add('active');
             
-            // Smooth scroll to section
+        // Smooth scroll to section
             targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
