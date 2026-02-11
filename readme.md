@@ -66,6 +66,7 @@ the-cafe-website/
 1. Clone or download the project files
 2. Open `index.html` in your web browser
 3. No build process required - runs directly in browser
+4. Live Demo [The Cafe website](https://taruesahanga.github.io/the-cafe-website/)
 
 
 ## 🔗 Navigation Structure
