@@ -118,28 +118,42 @@ img {
     box-shadow: 0 2px 10px var(--shadow);
 }
 
-.quick-nav-select {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border: 2px solid var(--secondary-color);
-    border-radius: var(--border-radius-lg);
-    background: var(--bg-white);
-    color: var(--text-dark);
-    font-family: var(--font-primary);
-    font-size: 1rem;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23D2691E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1.2rem;
-    padding-right: 3rem;
+.quick-nav-list {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
 }
 
-.quick-nav-select:focus {
+.quick-nav-list::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.quick-nav-btn {
+    background: var(--secondary-color);
+    color: var(--bg-white);
+    border: 2px solid var(--secondary-color);
+    padding: 0.6rem 0.8rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: var(--font-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.quick-nav-btn:hover,
+.quick-nav-btn.active {
+    background: var(--accent-color);
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
 }
 
 .visually-hidden {
@@ -1005,14 +1019,20 @@ img {
     }
     
     .menu-sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-        top: 0;
-        order: 2;
-        border-bottom: 2px solid var(--cream);
+        display: none; /* Hide sidebar on mobile, use quick menu instead */
     }
-    
+
+    .mobile-quick-menu {
+        display: block;
+        width: 100%;
+        padding: 0.5rem 1rem;
+        background: var(--background-color, #f5f0e8);
+        border-bottom: 1px solid var(--border-color, #e0d5c7);
+        position: sticky;
+        top: 60px; 
+        z-index: 100;
+      }
+      
     .menu-nav {
         width: 100%;
         height: auto;
@@ -1076,9 +1096,7 @@ img {
         order: 1;
     }
     
-    .menu-sidebar {
-        display: none; /* Hide sidebar on mobile, use quick menu instead */
-    }
+
     
     .menu-container {
         padding: 1rem;

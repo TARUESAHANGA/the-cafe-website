@@ -1,6 +1,6 @@
 // ===== Menu Page Cart Integration =====
 // Connects menu items to the main cart system
-
+/* jshint browser: true */
 document.addEventListener('DOMContentLoaded', function() {
     
     // ===== Initialize Cart from LocalStorage =====
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function addCartButtons() {
         const menuItems = document.querySelectorAll('.menu-item');
         
-        menuItems.forEach((item, index) => {
+        menuItems.forEach(item => {
             if (item.querySelector('.add-to-cart-btn')) return;
             
             const priceDiv = item.querySelector('.item-price');
@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
             background: var(--accent-color, #FF6B35);
             color: white;
             border: none;
+            padding-left: 2px;
             margin-left: 20px;
             border-radius: 8px;
             width: 100%;
@@ -297,6 +298,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Debug: Log current cart on load
-    console.log('Menu-cart.js loaded. Current cart:', cart);
+
 });

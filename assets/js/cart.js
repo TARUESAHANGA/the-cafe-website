@@ -1,5 +1,5 @@
 // Cart functionality for The Cafe website
-
+/* jshint browser: true */
 class CartManager {
     constructor() {
         this.cart = this.loadCart();
@@ -204,10 +204,7 @@ class CartManager {
         // Render items
         this.cartItemsContainer.innerHTML = this.cart.map((item, index) => `
             <div class="cart-item" style="animation-delay: ${index * 0.1}s">
-                <div class="cart-item-image">
-                    <img src="${item.image}" alt="${item.name}" onerror="this.src='./assets/images/default-food.jpg'">
-                </div>
-                <div class="cart-item-details">
+                  <div class="cart-item-details">
                     <h4>${item.name}</h4>
                     <p>${item.description || ''}</p>
                 </div>

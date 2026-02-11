@@ -329,6 +329,247 @@
     background: var(--error-color);
 }
 
+/* ===== Responsive Design - Tablet (1024px) ===== */
+@media screen and (max-width: 1024px) {
+    .cart-container {
+        display: flex;
+        grid-template-columns: 1fr;
+        flex-direction: column-reverse;
+        gap: 30px;
+    }
+
+    .cart-summary {
+        position: static;
+        order: -1;
+        width: 100%;
+    }
+
+    .cart-title {
+        font-size: 2.2rem;
+    }
+}
+
+/* ===== Responsive Design - Mobile (768px) ===== */
+@media screen and (max-width: 768px) {
+    .cart-section {
+        padding: 100px 15px 40px;
+    }
+
+    .cart-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .cart-container {
+        gap: 20px;
+    }
+
+    .cart-items {
+        padding: 20px;
+    }
+
+    .cart-summary {
+        padding: 20px;
+    }
+
+    .cart-item {
+        grid-template-columns: 80px 1fr auto;
+        gap: 15px;
+        padding: 15px 0;
+    }
+
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cart-item-details h4 {
+        font-size: 1.1rem;
+    }
+
+    .cart-item-details p {
+        font-size: 0.85rem;
+    }
+
+    .cart-item-price {
+        font-size: 1rem;
+        min-width: 60px;
+    }
+
+    .quantity-controls {
+        flex-direction: column;
+        gap: 5px;
+        padding: 8px;
+    }
+
+    .quantity-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+
+    .quantity-input {
+        width: 35px;
+        font-size: 0.9rem;
+    }
+
+    .remove-btn {
+        font-size: 1rem;
+        padding: 8px;
+    }
+
+    .cart-actions {
+        gap: 10px;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+}
+
+/* ===== Responsive Design - Small Mobile (480px) ===== */
+@media screen and (max-width: 480px) {
+    .cart-section {
+        padding: 80px 10px 30px;
+    }
+
+    .cart-title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .cart-items {
+        padding: 15px;
+    }
+
+    .cart-summary {
+        padding: 15px;
+    }
+
+    .empty-cart-message {
+        padding: 40px 15px;
+    }
+
+    .empty-cart-message i {
+        font-size: 3rem;
+    }
+
+    .empty-cart-message h3 {
+        font-size: 1.5rem;
+    }
+
+    .empty-cart-message p {
+        font-size: 1rem;
+    }
+
+    .cart-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .cart-item-image {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+    }
+
+    .cart-item-details {
+        text-align: center;
+    }
+
+    .cart-item-details h4 {
+        font-size: 1rem;
+    }
+
+    .cart-item-details p {
+        font-size: 0.8rem;
+    }
+
+    .cart-item-price {
+        font-size: 1rem;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .quantity-controls {
+        justify-content: center;
+        margin: 10px 0;
+    }
+
+    .remove-btn {
+        align-self: center;
+        margin-top: 10px;
+    }
+
+    .summary-item {
+        font-size: 0.9rem;
+    }
+
+    .summary-item.total {
+        font-size: 1.1rem;
+    }
+
+    .cart-summary h3 {
+        font-size: 1.3rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== Responsive Design - Extra Small (400px) ===== */
+@media screen and (max-width: 400px) {
+    .cart-section {
+        padding: 70px 5px 20px;
+    }
+
+    .cart-title {
+        font-size: 1.6rem;
+    }
+
+    .cart-items, .cart-summary {
+        padding: 10px;
+    }
+
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .empty-cart-message i {
+        font-size: 2.5rem;
+    }
+
+    .empty-cart-message h3 {
+        font-size: 1.3rem;
+    }
+
+    .empty-cart-message p {
+        font-size: 0.9rem;
+    }
+
+    .cart-summary h3 {
+        font-size: 1.2rem;
+    }
+
+    .summary-item {
+        font-size: 0.85rem;
+    }
+
+    .summary-item.total {
+        font-size: 1rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 600px) {
     .toast {
         left: 20px;

@@ -1,3 +1,6 @@
+/* jshint browser: true */
+/* exported ProductCart */
+
 class ProductCart {
     constructor() {
         this.cartManager = window.cartManager;
@@ -23,15 +26,17 @@ class ProductCart {
             });
         });
 
+        // Global function for inline HTML onclick attributes
         window.addToCart = (id, name, price, image) => {
             this.addProductToCart({
                 id: id,
                 name: name,
                 price: parseFloat(price),
                 image: image || '',
-                quantity: 0,
+                quantity: 1,
                 category: 'products'
             });
+            return false;
         };
     }
 
@@ -44,11 +49,9 @@ class ProductCart {
             description = productCard.querySelector('.product-description, .featured-content p')?.textContent.trim();
             category = productCard.dataset.category || 'general';
             
-            // Get icon as image placeholder
             const iconElement = productCard.querySelector('.product-image i, .featured-image i');
             if (iconElement) {
-                const iconClass = iconElement.className;
-                image = this.getProductImage(iconClass);
+                image = this.getProductImage(iconElement.className);
             }
         } else if (productCard.classList.contains('offer-card')) {
             title = productCard.querySelector('.offer-title')?.textContent.trim();
@@ -58,7 +61,6 @@ class ProductCart {
             image = 'https://via.placeholder.com/150x150/8B4513/FFFFFF?text=Special+Offer';
         }
 
-        // Generate a consistent ID
         const id = 'prod_' + title.toLowerCase().replace(/[^a-z0-9]/g, '_');
 
         return {
@@ -84,8 +86,7 @@ class ProductCart {
             'fas fa-calendar': 'https://via.placeholder.com/150x150/FF6347/FFFFFF?text=Subscription'
         };
 
-        // Check if any key exists in iconClass
-        for (let [key, value] of Object.entries(iconMap)) {
+        for (const [key, value] of Object.entries(iconMap)) {
             if (iconClass.includes(key)) return value;
         }
         
@@ -93,19 +94,18 @@ class ProductCart {
     }
 
     parsePrice(priceString) {
-        // Extract numeric value from price string (e.g., "£24.99" -> 24.99)
         if (!priceString) return 0;
         const match = priceString.match(/[\d.]+/);
         return match ? parseFloat(match[0]) : 0;
     }
 
     addProductToCart(productData) {
-        if (this.cartManager) {
-            this.cartManager.addItem(productData);
-        } else if (window.cartManager) {
-            window.cartManager.addItem(productData);
+        const manager = this.cartManager || window.cartManager;
+        
+        if (manager?.addItem) {
+            manager.addItem(productData);
         } else {
-            console.warn('CartManager not found, initializing fallback...');
+            console.warn('CartManager not found, using fallback');
             this.fallbackAddToCart(productData);
         }
         
@@ -113,55 +113,55 @@ class ProductCart {
     }
 
     fallbackAddToCart(productData) {
-        // Direct localStorage manipulation using cafeCart key
-        let cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
-        
-        const existingItem = cart.find(item => item.id === productData.id);
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push(productData);
+        try {
+            let cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
+            const existingItem = cart.find(item => item.id === productData.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(productData);
+            }
+            
+            localStorage.setItem('cafeCart', JSON.stringify(cart));
+            this.showAddToCartFeedback(productData.name);
+        } catch (error) {
+            console.error('Error in fallback cart:', error);
         }
-        
-        localStorage.setItem('cafeCart', JSON.stringify(cart));
-        this.showAddToCartFeedback(productData.name);
     }
 
     updateCartBadge() {
-        if (this.cartManager && this.cartManager.updateCartCount) {
-            this.cartManager.updateCartCount();
-        } else if (window.cartManager && window.cartManager.updateCartCount) {
-            window.cartManager.updateCartCount();
+        const manager = this.cartManager || window.cartManager;
+        
+        if (manager?.updateCartCount) {
+            manager.updateCartCount();
         } else {
-            // Fallback: manual badge update
+            this.fallbackUpdateBadge();
+        }
+    }
+
+    fallbackUpdateBadge() {
+        try {
             const cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             
-            const cartIcons = document.querySelectorAll('.fa-shopping-cart');
-            cartIcons.forEach(icon => {
-                let badge = icon.parentElement.querySelector('.cart-badge');
-                if (!badge && totalItems > 0) {
-                    badge = document.createElement('span');
-                    badge.className = 'cart-badge';
-                    icon.parentElement.style.position = 'relative';
-                    icon.parentElement.appendChild(badge);
-                }
-                
-                if (badge) {
-                    badge.textContent = totalItems > 99 ? '99+' : totalItems;
-                    badge.style.display = totalItems > 0 ? 'flex' : 'none';
-                }
+            document.querySelectorAll('.cart-count, .cart-badge').forEach(badge => {
+                badge.textContent = totalItems > 99 ? '99+' : totalItems;
+                badge.style.display = totalItems > 0 ? 'flex' : 'none';
             });
+        } catch (error) {
+            console.error('Error updating badge:', error);
         }
     }
 
     showAddToCartFeedback(productName) {
-        if (this.cartManager && this.cartManager.showNotification) {
-            this.cartManager.showNotification(`${productName} added to cart!`);
+        const manager = this.cartManager || window.cartManager;
+        
+        if (manager?.showNotification) {
+            manager.showNotification(`${productName} added to cart!`);
             return;
         }
 
-        // Notification
         const existing = document.querySelector('.cart-feedback');
         if (existing) existing.remove();
 
@@ -200,71 +200,9 @@ class ProductCart {
     }
 }
 
-// ============================================
-// INITIALIZATION
-// ============================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Wait a moment to ensure CartManager is loaded first
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         window.productCart = new ProductCart();
     }, 100);
 });
-
-// ============================================
-// GLOBAL FUNCTIONS FOR INLINE HTML CALLS
-// ============================================
-
-// This function can be called directly from HTML onclick attributes
-function addToCart(id, name, price, image) {
-    const productData = {
-        id: id,
-        name: name,
-        price: parseFloat(price),
-        image: image || '',
-        quantity: 1,
-        category: 'products'
-    };
-    
-    // Try to use ProductCart instance
-    if (window.productCart) {
-        window.productCart.addProductToCart(productData);
-    } else if (window.cartManager) {
-        window.cartManager.addItem(productData);
-    } else {
-        // Ultimate fallback
-        let cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
-        const existingItem = cart.find(item => item.id === id);
-        
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push(productData);
-        }
-        
-        localStorage.setItem('cafeCart', JSON.stringify(cart));
-        
-        // Show simple notification
-        alert(`${name} added to cart!`);
-    }
-    
-    return false; // Prevent default link behavior
-}
-
-// Update badge on page load
-function updateCartBadge() {
-    if (window.cartManager && window.cartManager.updateCartCount) {
-        window.cartManager.updateCartCount();
-    } else {
-        const cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        
-        document.querySelectorAll('.cart-badge').forEach(badge => {
-            badge.textContent = totalItems;
-            badge.style.display = totalItems > 0 ? 'flex' : 'none';
-        });
-    }
-}
-
-// Initialize badge on load
-document.addEventListener('DOMContentLoaded', updateCartBadge);

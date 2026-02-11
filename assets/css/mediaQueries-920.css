@@ -144,16 +144,7 @@
     }
 
     /* --- Mobile Quick Menu --- */
-    .mobile-quick-menu {
-        display: block;
-        width: 100%;
-        padding: 0.5rem 1rem;
-        background: var(--background-color, #f5f0e8);
-        border-bottom: 1px solid var(--border-color, #e0d5c7);
-        position: sticky;
-        top: 60px; 
-        z-index: 100;
-      }
+
     
       .quick-nav-select {
         width: 100%;

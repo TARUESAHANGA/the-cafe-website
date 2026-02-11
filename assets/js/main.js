@@ -1,211 +1,154 @@
 // ===== Main JavaScript for The Cafe Website =====
-/* eslint-env browser */
 
-// ===== Active Page Highlight =====
-function highlightActivePage() {
-    const currentPath = window.location.pathname;
-    const currentPage = currentPath.split('/').pop() || 'index.html';
-    const isInPagesFolder = currentPath.includes('/pages/');
-
-    const navLinks = document.querySelectorAll('.nav-link, .nav-menu a');
-
-    navLinks.forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (!linkHref) return;
-
-        // Remove existing active classes
-        link.classList.remove('active');
-
-        // Skip dropdown toggles and anchors
-        if (linkHref === '#' || linkHref.startsWith('#')) return;
-
-        // Resolve href to a pathname to handle absolute and relative URLs
-        let resolvedPathname;
-        try {
-            resolvedPathname = new URL(linkHref, window.location.origin).pathname;
-        } catch (e) {
-            resolvedPathname = linkHref;
-        }
-
-        // Normalize paths for comparison
-        let normalizedLink = resolvedPathname;
-        let normalizedCurrent = currentPage;
-
-        // Handle paths from root (index.html)
-        if (!isInPagesFolder) {
-            if (normalizedLink.startsWith('/pages/')) {
-                normalizedLink = normalizedLink.replace('/pages/', '');
-            } else if (normalizedLink.startsWith('pages/')) {
-                normalizedLink = normalizedLink.replace('pages/', '');
+document.addEventListener('DOMContentLoaded', function() {
+    // ===== Active Page Highlight =====
+    function highlightActivePage() {
+        const currentPath = window.location.pathname;
+        const currentPage = currentPath.split('/').pop() || 'index.html';
+        const currentFolder = currentPath.includes('/pages/') ? 'pages' : 'root';
+        
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            const linkHref = link.getAttribute('href');
+            
+            link.classList.remove('active');
+            
+            let normalizedLinkHref = linkHref;
+            let normalizedCurrentPage = currentPage;
+            
+            if (currentFolder === 'pages') {
+                if (linkHref === '../index.html') {
+                    normalizedLinkHref = 'index.html';
+                } else {
+                    normalizedLinkHref = linkHref.startsWith('../') ? linkHref.substring(3) : linkHref;
+                }
+            } else {
+                if (linkHref.startsWith('pages/')) {
+                    normalizedLinkHref = linkHref.substring(6);
+                }
             }
-            if (normalizedLink === '/index.html' || normalizedLink === './index.html') {
-                normalizedLink = 'index.html';
+            
+            if (normalizedLinkHref === normalizedCurrentPage || 
+                (normalizedCurrentPage === 'index.html' && normalizedLinkHref === '/') ||
+                (normalizedCurrentPage === '' && normalizedLinkHref === 'index.html')) {
+                link.classList.add('active');
             }
-        } else {
-            if (normalizedLink === '/index.html' || normalizedLink === '../index.html') {
-                normalizedLink = 'index.html';
-            } else if (normalizedLink.startsWith('./')) {
-                normalizedLink = normalizedLink.replace('./', '');
-            }
-        }
-
-        // Remove leading slashes
-        normalizedLink = normalizedLink.replace(/^\/+/, '');
-        normalizedCurrent = normalizedCurrent.replace(/^\/+/, '');
-
-        // Check for match
-        let isMatch = false;
-
-        if (normalizedLink === normalizedCurrent) {
-            isMatch = true;
-        } else if (
-            (normalizedCurrent === '' || normalizedCurrent === 'index.html') &&
-            (normalizedLink === 'index.html' || normalizedLink === './index.html' || normalizedLink === '../index.html')
-        ) {
-            isMatch = true;
-        }
-
-        if (isMatch) {
-            link.classList.add('active');
-
-            // If this is a dropdown item, also highlight parent
-            const dropdown = link.closest('.dropdown');
-            if (dropdown) {
-                const parentLink = dropdown.querySelector('.nav-link:not(.dropdown-link)');
-                if (parentLink) {
+            
+            if (link.closest('.dropdown')) {
+                const parentNavItem = link.closest('.nav-item');
+                const parentLink = parentNavItem.querySelector('.nav-link:not(.dropdown-link)');
+                
+                if (parentLink && normalizedLinkHref === normalizedCurrentPage) {
                     parentLink.classList.add('active');
                 }
             }
-        }
-    });
-}
-
-// ===== Standalone Badge Updater =====
-function updateCartBadge() {
-    const cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartIcon = document.querySelector('.fa-shopping-cart');
-    
-    if (!cartIcon) return;
-    
-    const cartLink = cartIcon.closest('a') || cartIcon.parentElement;
-    
-    if (!cartLink) return;
-    
-    // Remove existing badge
-    const existingBadge = cartLink.querySelector('.cart-badge');
-    if (existingBadge) existingBadge.remove();
-
-    if (totalItems > 0) {
-        const badge = document.createElement('span');
-        badge.className = 'cart-badge';
-        badge.textContent = totalItems;
-        badge.style.cssText = `
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: #D4A574;
-            color: white;
-            font-size: 0.7rem;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            z-index: 1000;
-            pointer-events: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            border: 2px solid white;
-        `;
-        cartLink.style.position = 'relative';
-        cartLink.style.display = 'inline-block';
-        cartLink.appendChild(badge);
+        });
     }
-}
 
-// ===== Main Initialization =====
-document.addEventListener('DOMContentLoaded', function () {
-    // ===== Mobile Menu Elements =====
+    highlightActivePage();
+
+    // ===== Mobile Menu Toggle =====
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
     const navItems = document.querySelectorAll('.nav-item');
-    
-    // ===== Mobile Menu Toggle =====
+
     if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', function () {
+        mobileMenuToggle.addEventListener('click', function() {
             mobileMenuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
             
-            if (navMenu) {
-                navMenu.classList.toggle('active');
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
             }
-            
-            // Add overlay effect
-            document.body.style.overflow = (navMenu && navMenu.classList.contains('active')) ? 'hidden' : '';
         });
     }
-    
-    // ===== Close mobile menu when clicking on a link =====
+
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
-        link.addEventListener('click', function () {
+        link.addEventListener('click', function() {
             if (mobileMenuToggle) {
                 mobileMenuToggle.classList.remove('active');
-            }
-            if (navMenu) {
                 navMenu.classList.remove('active');
+                document.body.style.overflow = '';
             }
-            document.body.style.overflow = '';
-            
-            // Update active highlight after navigation
             setTimeout(highlightActivePage, 100);
         });
     });
-    
+
     // ===== Dropdown Menu Toggle for Mobile =====
     navItems.forEach(item => {
-        const chevron = item.querySelector('.fa-chevron-down, .dropdown-toggle');
-        const dropdown = item.querySelector('.dropdown');
+        const hasDropdown = item.querySelector('.dropdown');
+        const mainLink = item.querySelector('.nav-link:not(.dropdown-link)');
+        const chevron = item.querySelector('.fa-chevron-down');
         
-        if (chevron && dropdown) {
-            chevron.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Only toggle on mobile (when hamburger menu is visible)
+        if (hasDropdown && mainLink) {
+            mainLink.addEventListener('click', function(e) {
                 if (window.innerWidth <= 920) {
-                    item.classList.toggle('active');
+                    e.preventDefault();
                     
-                    // Close other dropdowns
+                    const isActive = item.classList.contains('active');
+                    
                     navItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             otherItem.classList.remove('active');
                         }
                     });
+                    
+                    item.classList.toggle('active');
+                    
+                    if (!isActive) {
+                        e.stopPropagation();
+                    } else {
+                        const href = mainLink.getAttribute('href');
+                        if (href && href !== '#') {
+                            window.location.href = href;
+                        }
+                    }
                 }
             });
+            
+            if (chevron) {
+                chevron.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (window.innerWidth <= 920) {
+                        navItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        item.classList.toggle('active');
+                    }
+                });
+            }
         }
     });
-    
+
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 920) {
+            const isClickInsideNav = e.target.closest('.nav-menu');
+            if (!isClickInsideNav) {
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        }
+    });
+
     // ===== Smooth Scroll for Anchor Links =====
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
     
     anchorLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            
-            // Guard against missing or empty href values
-            if (!targetId || targetId === '#') return;
-            
+        link.addEventListener('click', function(e) {
             e.preventDefault();
             
-            let targetSection = null;
-            try {
-                targetSection = document.querySelector(targetId);
-            } catch (err) {
-                targetSection = null;
-            }
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
                 targetSection.scrollIntoView({
@@ -213,14 +156,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     block: 'start'
                 });
                 
-                // Update URL without page jump
-                if (history && typeof history.pushState === 'function') {
-                    history.pushState(null, '', targetId);
+                if (history.pushState) {
+                    history.pushState(null, null, targetId);
                 }
             }
         });
     });
-    
+
     // ===== Active Navigation Link on Scroll =====
     function updateActiveLink() {
         const sections = document.querySelectorAll('section[id]');
@@ -249,32 +191,111 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ===== Cart Functionality =====
     const cartIcon = document.querySelector('.fa-shopping-cart');
-    const cartCountBadge = document.querySelector('.cart-count');
 
     if (cartIcon) {
-        // Update cart count from localStorage
-        function updateCartCount() {
-            if (cartCountBadge) {
-                const cart = JSON.parse(localStorage.getItem('cafeCart')) || [];
-                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-                cartCountBadge.textContent = totalItems;
-                cartCountBadge.style.display = totalItems > 0 ? 'flex' : 'none';
-            }
-        }
-        
-        // Initial update
-        updateCartCount();
-        
-        // Listen for cart updates
-        window.addEventListener('storage', updateCartCount);
-        window.addEventListener('cartUpdated', updateCartCount);
+        cartIcon.parentElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const currentPath = window.location.pathname;
+            const cartPath = currentPath.includes('/pages/') ? 'cart.html' : 'pages/cart.html';
+            
+            window.location.href = cartPath;
+        });
+    }
 
-        const cartParent = cartIcon.closest('a') || cartIcon.parentElement;
-        if (cartParent) {
-            cartParent.addEventListener('click', function() {
-                updateCartCount();
+    // ===== Menu Navigation Integration =====
+    const originalShowSection = window.showSection;
+    if (originalShowSection) {
+        window.showSection = function(sectionId) {
+            originalShowSection(sectionId);
+            
+            const currentPath = window.location.pathname;
+            const basePath = currentPath.split('#')[0];
+            history.replaceState(null, null, basePath + sectionId);
+            
+            const menuTabs = document.querySelectorAll('.menu-tab');
+            menuTabs.forEach(tab => {
+                if (tab.getAttribute('onclick').includes(sectionId)) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
             });
-        }
+        };
+    }
+
+    // ===== Mobile Quick Menu =====
+    const quickNav = document.getElementById('quick-nav');
+    
+    if (quickNav) {
+        quickNav.addEventListener('change', function() {
+            const selectedValue = this.value;
+            
+            if (!selectedValue) return;
+            
+            this.style.opacity = '0.7';
+            
+            const currentPath = window.location.pathname;
+            const isInPagesFolder = currentPath.includes('/pages/');
+            const isMenuPage = currentPath.includes('menu.html');
+            
+            let finalUrl = selectedValue;
+            
+            // Handle path resolution based on current location
+            if (isInPagesFolder) {
+                // Currently in /pages/ folder
+                if (selectedValue === 'index.html') {
+                    finalUrl = '../index.html';
+                }
+                // menu.html#section stays as is since we're in pages folder
+            } else {
+                // Currently in root folder
+                if (selectedValue.startsWith('menu.html')) {
+                    finalUrl = 'pages/' + selectedValue;
+                } else if (selectedValue !== 'index.html' && !selectedValue.startsWith('http')) {
+                    finalUrl = 'pages/' + selectedValue;
+                }
+            }
+            
+            // Handle hash navigation for smooth scroll on current page
+            if (selectedValue.includes('#')) {
+                const [page, hash] = selectedValue.split('#');
+                const targetId = hash;
+                
+                // If we're already on the menu page, just scroll to section
+                if (isMenuPage || (isInPagesFolder && page === 'menu.html') || (!isInPagesFolder && page === 'pages/menu.html')) {
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Update URL hash
+                        history.pushState(null, null, '#' + targetId);
+                        
+                        // Reset select after animation
+                        setTimeout(() => {
+                            this.selectedIndex = 0;
+                            this.style.opacity = '1';
+                        }, 1000);
+                        return;
+                    }
+                }
+                
+                // Navigate to page with hash
+                window.location.href = finalUrl;
+            } else {
+                // Regular page navigation
+                window.location.href = finalUrl;
+            }
+        });
+        
+        // Reset when returning via back button
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                quickNav.selectedIndex = 0;
+                quickNav.style.opacity = '1';
+            }
+        });
     }
 
     // ===== Window Resize Handler =====
@@ -283,99 +304,80 @@ document.addEventListener('DOMContentLoaded', function () {
             if (mobileMenuToggle) {
                 mobileMenuToggle.classList.remove('active');
             }
-            if (navMenu) {
-                navMenu.classList.remove('active');
-            }
+            navMenu.classList.remove('active');
             document.body.style.overflow = '';
             
-            // Reset dropdowns
             navItems.forEach(item => {
                 item.classList.remove('active');
             });
         }
         
-        // Re-highlight active page on resize
         highlightActivePage();
     }
 
     window.addEventListener('resize', handleResize);
 
+    // ===== Handle Browser Navigation =====
+    window.addEventListener('popstate', function() {
+        highlightActivePage();
+        
+        const hash = window.location.hash;
+        if (hash && window.showSection) {
+            window.showSection(hash);
+        }
+    });
+
+    // ===== Loading Animation =====
+    window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+        highlightActivePage();
+    });
+
     // ===== Initialize =====
     updateActiveLink();
     highlightActivePage();
-    updateCartBadge();
-    
-    // Initialize cart badge from CartManager if available
-    if (typeof CartManager !== 'undefined' && CartManager.updateBadgeGlobally) {
-        CartManager.updateBadgeGlobally();
-    }
 });
 
-// ===== Handle Browser Navigation (Back/Forward buttons) =====
-window.addEventListener('popstate', highlightActivePage);
-
-// ===== Loading Animation =====
-window.addEventListener('load', function() {
-    document.body.classList.add('loaded');
-    highlightActivePage();
-});
-
-// ===== Additional CSS for Active Page Highlighting =====
+// ===== Inject Additional Styles =====
 const additionalStyles = `
-    /* Active page highlight styles */
-    .nav-link.active,
-    .nav-menu a.active {
-        color: var(--accent-color, #FF6B35) !important;
-        font-weight: 600;
-        position: relative;
+    .search-result-item {
+        padding: 0.5rem;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
     }
 
-    .nav-link.active::after,
-    .nav-menu a.active::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: var(--accent-color, #FF6B35);
-        border-radius: 2px;
+    .search-result-item:hover {
+        background-color: #f5f5f5;
     }
 
-    /* Dropdown parent active when child is active */
-    .nav-item:has(.dropdown-link.active) > .nav-link,
-    .dropdown:has(.active) > .nav-link {
-        color: var(--accent-color, #FF6B35) !important;
+    .cart-notification {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        z-index: 1500;
+        animation: slideInRight 0.3s ease;
     }
 
-    /* Mobile active page styles */
-    @media (max-width: 920px) {
-        .nav-link.active,
-        .nav-menu a.active {
-            background: rgba(255, 107, 53, 0.1);
-            border-radius: 5px;
-            padding: 0.5rem 1rem;
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
         }
-        
-        .nav-link.active::after,
-        .nav-menu a.active::after {
-            display: none;
-        }
-        
-        /* Show underline on mobile for active state */
-        .nav-link.active {
-            border-left: 3px solid var(--accent-color, #FF6B35);
-            padding-left: 0.8rem !important;
+        to {
+            transform: translateX(0);
+            opacity: 1;
         }
     }
 
-    /* Dropdown active state */
-    .dropdown-link.active {
-        color: var(--accent-color, #FF6B35);
-        background: rgba(255, 107, 53, 0.1);
+    .cart-notification a {
+        color: #FF6B35;
+        font-weight: bold;
     }
 
-    /* Loading animation */
     body.loaded {
         animation: fadeIn 0.5s ease;
     }
@@ -389,44 +391,52 @@ const additionalStyles = `
         }
     }
 
-    /* Cart count badge */
-    .cart-count {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background: var(--accent-color, #FF6B35);
-        color: white;
-        font-size: 0.7rem;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-    }
-
-    .cart-icon {
+    .nav-link.active {
+        color: var(--accent-color) !important;
+        font-weight: 600;
         position: relative;
     }
 
-    /* Smooth transitions */
-    .nav-link {
-        transition: color 0.3s ease, background 0.3s ease;
+    .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--accent-color);
+        border-radius: 2px;
+    }
+
+    .nav-item.active .nav-link {
+        color: var(--accent-color) !important;
+    }
+
+    @media (max-width: 920px) {
+        .nav-link.active {
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+        }
+        
+        .nav-link.active::after {
+            display: none;
+        }
+    }
+
+    .dropdown-link.active {
+        color: var(--accent-color);
+        background: rgba(255, 107, 53, 0.1);
+    }
+
+    .menu-tab.active {
+        background: var(--primary-brown) !important;
+        color: caramel !important;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
     }
 `;
 
-// Inject additional styles
-(function injectStyles() {
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = additionalStyles;
-    
-    if (document.head) {
-        document.head.appendChild(styleSheet);
-    } else {
-        // Fallback if head isn't ready yet
-        document.addEventListener('DOMContentLoaded', function() {
-            document.head.appendChild(styleSheet);
-        });
-    }
-})();
+const styleSheet = document.createElement('style');
+styleSheet.textContent = additionalStyles;
+document.head.appendChild(styleSheet);

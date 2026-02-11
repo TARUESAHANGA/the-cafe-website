@@ -73,18 +73,14 @@
             
             <!-- Mobile Quick Menu Dropdown -->
             <div class="mobile-quick-menu">
-                <label for="quick-nav" class="visually-hidden">Quick Menu</label>
-                <select id="quick-nav" class="quick-nav-select" onchange="if(this.value) location .href= this.value;">
-                    <option value="" selected disabled>☰ Quick Menu Access</option>
-                    <optgroup label="Menu Categories">
-                        <option value="menu.html#coffee">☕ Coffee & Espresso</option>
-                        <option value="menu.html#tea">🍵 Tea & Beverages</option>
-                        <option value="menu.html#pastries">🥐 Fresh Pastries</option>
-                        <option value="menu.html#lunch">🥪 Lunch & Light Bites</option>
-                        <option value="menu.html#desserts">🍰 Desserts</option>
-                        <option value="menu.html#kiddies">🧸 Kiddies Meal</option>
-                    </optgroup>
-                </select>
+                <div class="quick-nav-list">
+                    <button class="quick-nav-btn" onclick="showSection('#coffee')">☕ Coffee & Espresso</button>
+                    <button class="quick-nav-btn" onclick="showSection('#tea')">🍵 Tea & Beverages</button>
+                    <button class="quick-nav-btn" onclick="showSection('#pastries')">🥐 Fresh Pastries</button>
+                    <button class="quick-nav-btn" onclick="showSection('#lunch')">🥪 Lunch & Light Bites</button>
+                    <button class="quick-nav-btn" onclick="showSection('#desserts')">🍰 Desserts</button>
+                    <button class="quick-nav-btn" onclick="showSection('#kiddies')">🧸 Kiddies Meal</button>
+                </div>
             </div>
             
             <!-- Sidebar Menu Tabs -->

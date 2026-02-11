@@ -1,4 +1,5 @@
 // ===== Menu Page Specific JavaScript =====
+/* jshint browser: true */
 document.addEventListener('DOMContentLoaded', function() {
     
     // ===== Section Navigation =====
@@ -42,19 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // ===== Handle URL Hash on Page Load =====
-    function handleInitialHash() {
-        const hash = window.location.hash;
-        if (hash) {
-            // Small delay to ensure DOM is fully loaded
-            setTimeout(() => {
-                showSection(hash);
-            }, 100);
-        } else {
-            // Default to coffee section
-            showSection('#coffee');
-        }
-    }
+
 
     // ===== Search Functionality =====
     const searchInput = document.getElementById('menu-search');
@@ -75,9 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Search across all sections
-            let hasResults = false;
             const allItems = document.querySelectorAll('.menu-item');
-            
+
             allItems.forEach(item => {
                 const itemName = item.querySelector('.item-name')?.textContent.toLowerCase() || '';
                 const itemDesc = item.querySelector('.item-description')?.textContent.toLowerCase() || '';
@@ -86,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (itemName.includes(searchTerm) || itemDesc.includes(searchTerm) || itemTags.includes(searchTerm)) {
                     item.style.display = 'flex';
                     item.closest('.menu-section')?.classList.add('active');
-                    hasResults = true;
                 } else {
                     item.style.display = 'none';
                 }
@@ -120,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const quickNav = document.getElementById('quick-nav');
     
     if (quickNav) {
-        // Override the inline onchange to use our smooth function
         quickNav.removeAttribute('onchange');
         
         quickNav.addEventListener('change', function() {
@@ -133,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const sectionId = selectedValue.substring(selectedValue.indexOf('#'));
                 showSection(sectionId);
                 
-                // Reset select after animation
                 setTimeout(() => {
                     this.selectedIndex = 0;
                     this.style.opacity = '1';
@@ -232,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===== Initialize =====
-    handleInitialHash();
     initializeAddToCart();
     initializeScrollSpy();
     
